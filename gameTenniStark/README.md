@@ -1,6 +1,6 @@
-# <div align="center"> TenniStack Game </div>
-
-#### This game was created on Eclipse IDE.
+# <div align="center"> <img src="./img/tenniStarkLogo.svg" alt="TenniStark" /> </div>
+##### TenniStark Game by Marc
+###### This game was created on Eclipse IDE.
 
     Development info:
 
