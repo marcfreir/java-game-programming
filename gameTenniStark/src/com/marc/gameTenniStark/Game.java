@@ -1,14 +1,18 @@
 package com.marc.gameTenniStark;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
 
-public class Game extends Canvas implements Runnable
+public class Game extends Canvas implements Runnable, KeyListener
 {
 
 	/**
@@ -21,15 +25,18 @@ public class Game extends Canvas implements Runnable
 	public static final int HEIGHT = 120;
 	public static final int SCALE = 4;
 	
+	public BufferedImage layer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	
 	//Declaring new object as Player type
 	public Player player;
 	
 	//Game Constructor
 	public Game()
 	{
-		this.setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
+		this.setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
+		this.addKeyListener(this);
 		//Instantiating new Player
-		player = new Player();
+		player = new Player(100, HEIGHT-10);
 	}
 	
 	public static void main(String[] args)
@@ -48,7 +55,7 @@ public class Game extends Canvas implements Runnable
 	
 	public void update()
 	{
-		//to do
+		player.update();
 	}
 	
 	public void render()
@@ -61,8 +68,14 @@ public class Game extends Canvas implements Runnable
 			return;
 		}
 		
-		Graphics graphic = bs.getDrawGraphics();
+		Graphics graphic = layer.getGraphics();
+		graphic.setColor(Color.black);
+		graphic.fillRect(0, 0, WIDTH, HEIGHT);
 		player.render(graphic);
+		
+		//Fix the canvas flickering by adding a layer on the canvas
+		graphic = bs.getDrawGraphics();
+		graphic.drawImage(layer, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
 		
 		//Display the Player
 		bs.show();
@@ -80,10 +93,49 @@ public class Game extends Canvas implements Runnable
 			{
 				Thread.sleep(1000/60);
 			}
-			catch (InterruptedException e)
+			catch (InterruptedException exception)
 			{
-				e.printStackTrace();
+				exception.printStackTrace();
 			}
+		}
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent event)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent event)
+	{
+		if (event.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			System.out.println("Right Key pressed");
+			player.right = true;
+		}
+		else if (event.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			System.out.println("Left Key pressed");
+			player.left = true;
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent event)
+	{
+		if (event.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			System.out.println("Right Key pressed");
+			player.right = false;
+		}
+		else if (event.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			System.out.println("Left Key pressed");
+			player.left = false;
 		}
 		
 	}

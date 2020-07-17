@@ -5,15 +5,36 @@ import java.awt.Graphics;
 
 public class Player
 {
+	public boolean right;
+	public boolean left;
+	
+	//For the axis
+	public int x;
+	public int y;
+	
+	public Player(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+	
 	public void update()
 	{
-		//to do
+		if (right)
+		{
+			x++;
+		}
+		else if (left)
+		{
+			x--;
+		}
 	}
 	
 	public void render(Graphics graphic)
 	{
-		graphic.setColor(Color.BLUE);
-		graphic.fillRect(200, 120-10, 40, 10);
+		Color electricPurple = new Color(98, 0, 225);
+		graphic.setColor(electricPurple);
+		graphic.fillRect(x, y, 40, 10);
 	}
 
 }
