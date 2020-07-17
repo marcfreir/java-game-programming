@@ -27,8 +27,10 @@ public class Game extends Canvas implements Runnable, KeyListener
 	
 	public BufferedImage layer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	
-	//Declaring new object as Player type
+	//Declaring new object as Player, Enemy and Ball type
 	public Player player;
+	public Enemy enemy;
+	public static Ball ball;
 	
 	//Game Constructor
 	public Game()
@@ -36,7 +38,9 @@ public class Game extends Canvas implements Runnable, KeyListener
 		this.setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
 		this.addKeyListener(this);
 		//Instantiating new Player
-		player = new Player(100, HEIGHT-10);
+		player = new Player(100, (HEIGHT - 10));
+		enemy = new Enemy(100, 0);
+		ball = new Ball(100, ((HEIGHT / 2) - 1));
 	}
 	
 	public static void main(String[] args)
@@ -56,6 +60,8 @@ public class Game extends Canvas implements Runnable, KeyListener
 	public void update()
 	{
 		player.update();
+		enemy.update();
+		ball.update();
 	}
 	
 	public void render()
@@ -72,10 +78,12 @@ public class Game extends Canvas implements Runnable, KeyListener
 		graphic.setColor(Color.black);
 		graphic.fillRect(0, 0, WIDTH, HEIGHT);
 		player.render(graphic);
+		enemy.render(graphic);
+		ball.render(graphic);
 		
 		//Fix the canvas flickering by adding a layer on the canvas
 		graphic = bs.getDrawGraphics();
-		graphic.drawImage(layer, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
+		graphic.drawImage(layer, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 		
 		//Display the Player
 		bs.show();
@@ -91,7 +99,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 			render();
 			try
 			{
-				Thread.sleep(1000/60);
+				Thread.sleep(1000 / 60);
 			}
 			catch (InterruptedException exception)
 			{

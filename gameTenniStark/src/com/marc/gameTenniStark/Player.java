@@ -9,17 +9,18 @@ public class Player
 	public boolean left;
 	
 	//For the axis
-	public int x;
-	public int y;
+	public int axisX;
+	public int axisY;
 	
 	//For the player
 	public int playerWidth;
 	public int playerHeight;
 	
-	public Player(int x, int y)
+	//Player Constructor
+	public Player(int axisX, int axisY)
 	{
-		this.x = x;
-		this.y = y;
+		this.axisX = axisX;
+		this.axisY = axisY;
 		this.playerWidth = 40;
 		this.playerHeight = 10;
 	}
@@ -28,21 +29,21 @@ public class Player
 	{
 		if (right)
 		{
-			x++;
+			axisX++;
 		}
 		else if (left)
 		{
-			x--;
+			axisX--;
 		}
 		
 		//Adding collision detection
-		if ((x + playerWidth) > Game.WIDTH)
+		if ((axisX + playerWidth) > Game.WIDTH)
 		{
-			x = Game.WIDTH - playerWidth;
+			axisX = Game.WIDTH - playerWidth;
 		}
-		else if (x < 0)
+		else if (axisX < 0)
 		{
-			x = 0;
+			axisX = 0;
 		}
 	}
 	
@@ -50,7 +51,7 @@ public class Player
 	{
 		Color electricPurple = new Color(98, 0, 225);
 		graphic.setColor(electricPurple);
-		graphic.fillRect(x, y, playerWidth, playerHeight);
+		graphic.fillRect(axisX, axisY, playerWidth, playerHeight);
 	}
 
 }
