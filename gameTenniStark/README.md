@@ -1,4 +1,4 @@
-# <div align="center"> <img src="./img/tenniStarkLogo.svg" alt="TenniStark" /> </div>
+# <div align="center"> <img src="./img/tenniStarkLogo.svg" alt="TenniStark" width="350" /> </div>
 ##### TenniStark Game by Marc
 ###### This game was created on Eclipse IDE.
 
