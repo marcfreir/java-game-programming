@@ -3,9 +3,9 @@ package com.marc.main;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
+//import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+//import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -40,8 +40,9 @@ public class Game extends Canvas implements Runnable
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     }
 
-    public void initFrame() {
-        frame = new JFrame("Game #01");
+    public void initFrame()
+    {
+        frame = new JFrame("Game #PlatformerOne");
         frame.add(this);
         frame.setResizable(false);
         frame.pack();
@@ -51,13 +52,15 @@ public class Game extends Canvas implements Runnable
         frame.setVisible(true);
     }
 
-    public synchronized void start() {
+    public synchronized void start()
+    {
         thread = new Thread(this);
         isRunning = true;
         thread.start();
     }
 
-    public synchronized void stop() {
+    public synchronized void stop()
+    {
         isRunning = false;
         try
         {
@@ -98,7 +101,7 @@ public class Game extends Canvas implements Runnable
         graphic.fillRect(0, 0, WIDTH, HEIGHT);
         
         //Game Rendering
-        Graphics2D graphic2D = (Graphics2D) graphic;
+        //Graphics2D graphic2D = (Graphics2D) graphic;
 
         /***/
         graphic.dispose();

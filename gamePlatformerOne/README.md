@@ -1,9 +1,7 @@
-# Platformer One
+<div align="center"> <img src="./_img/PlatformerOne.svg" alt="GameName" width="350" /> </div>
 
-
-<!--# <div align="center"> <img src="./img/newLogo.svg" alt="GameName" width="350" /> </div>
-##### Game Name by Marc
-###### This game was created on Eclipse IDE. -->
+##### Platformer One aka Timmy Nee by Marc
+###### This game was created on Eclipse IDE.
 
     Development info:
 
@@ -13,6 +11,8 @@
      
 <!--
 <div align="center"> <p>Preview</p> <img src="./demo/gamename-presentation.gif" alt="GameName" width="480" /> </div> -->
+
+     Status: On-going...
 
 
      Licence: MIT [Marc Freir]
