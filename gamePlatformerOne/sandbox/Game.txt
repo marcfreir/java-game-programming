@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -14,10 +13,11 @@ import javax.swing.JFrame;
 /**
  * Graphics
  */
-public class Game extends Canvas implements Runnable
-{
+public class Game extends Canvas implements Runnable {
 
-
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
 
     public static JFrame frame;
@@ -26,18 +26,17 @@ public class Game extends Canvas implements Runnable
 
     private boolean isRunning = true;
 
-    private static final int WIDTH = 240;
-    private static final int HEIGHT = 160;
+    private static final int WIDTH = 160;
+    private static final int HEIGHT = 120;
     private static final int SCALE = 4;
 
     private transient BufferedImage image;
 
-    
     // Constructor
     public Game() {
-    	setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-    	initFrame();
-    	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+        setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+        initFrame();
+        image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     }
 
     public void initFrame() {
@@ -47,6 +46,7 @@ public class Game extends Canvas implements Runnable
         frame.pack();
         // Centered window
         frame.setLocationRelativeTo(null);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
@@ -82,7 +82,6 @@ public class Game extends Canvas implements Runnable
         //Something
     }
 
-
     public void render()
     {
         //To organize complex memory on the Canvas
@@ -93,17 +92,18 @@ public class Game extends Canvas implements Runnable
             return;
         }
         //To draw onto Canvas
-        Graphics graphic = image.getGraphics();
-        graphic.setColor(new Color(19,19,19));
-        graphic.fillRect(0, 0, WIDTH, HEIGHT);
-        
-        //Game Rendering
-        Graphics2D graphic2D = (Graphics2D) graphic;
+        Graphics graphics = image.getGraphics();
+        graphics.setColor(new Color(19,19,19));
+        graphics.fillRect(0, 0, WIDTH, HEIGHT);
 
-        /***/
-        graphic.dispose();
-        graphic = bs.getDrawGraphics();
-        graphic.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE,null);
+        /**graphics.setColor(Color.MAGENTA);
+        graphics.fillRect(20, 20, 80, 80);*/
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("Arial", Font.BOLD, 16));
+        graphics.drawString("Hello Friend!", 15, 15);
+
+        graphics = bs.getDrawGraphics();
+        graphics.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE,null);
         bs.show();
     }
 
