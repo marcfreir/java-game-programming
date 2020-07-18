@@ -7,27 +7,30 @@ public class Enemy
 {
 	public double axisX;
 	public double axisY;
-	public int width;
-	public int height;
+	public int enemyWidth;
+	public int enemyHeight;
+	
+	public double enemyStrength = 0.07;
 	
 	//Enemy Constructor
 	public Enemy(int axisX, int axisY)
 	{
 		this.axisX = axisX;
 		this.axisY = axisY;
-		this.width = 40;
-		this.height = 10;
+		this.enemyWidth = 40;
+		this.enemyHeight = 10;
 	}
 	
 	public void update()
 	{
-		axisX += (Game.ball.axisX - axisX - 7);
+		
+		axisX += (Game.ball.axisX - axisX - 7) * enemyStrength;
 	}
 	
 	public void render(Graphics graphic)
 	{
 		graphic.setColor(Color.red);
-		graphic.fillRect((int)axisX, (int)axisY, width, height);
+		graphic.fillRect((int)axisX, (int)axisY, enemyWidth, enemyHeight);
 	}
 
 }
