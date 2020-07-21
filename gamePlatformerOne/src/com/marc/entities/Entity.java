@@ -1,5 +1,6 @@
 package com.marc.entities;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Entity
@@ -41,5 +42,11 @@ public class Entity
 	public int getEntityHeight()
 	{
 		return this.entityHeight;
+	}
+	
+	//Render
+	public void render(Graphics entityGraphics)
+	{
+		entityGraphics.drawImage(sprite, this.getEntityX(), this.getEntityY(), null);
 	}
 }
