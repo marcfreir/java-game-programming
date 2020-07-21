@@ -16,9 +16,9 @@ public class Spritesheet
 		{
 			spritesheet = ImageIO.read(getClass().getResource(path));
 		}
-		catch (IOException e)
+		catch (IOException exception)
 		{
-			e.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 	

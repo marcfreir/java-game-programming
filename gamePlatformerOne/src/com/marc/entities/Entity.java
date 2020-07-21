@@ -44,8 +44,13 @@ public class Entity
 		return this.entityHeight;
 	}
 	
+	public void updateEntity()
+	{
+		//To do
+	}
+	
 	//Render
-	public void render(Graphics entityGraphics)
+	public void renderEntity(Graphics entityGraphics)
 	{
 		entityGraphics.drawImage(sprite, this.getEntityX(), this.getEntityY(), null);
 	}

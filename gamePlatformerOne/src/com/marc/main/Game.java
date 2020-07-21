@@ -8,8 +8,14 @@ import java.awt.Graphics;
 //import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
+
+import com.marc.entities.Entity;
+import com.marc.entities.Player;
+import com.marc.graphics.Spritesheet;
 
 /**
  * Graphics
@@ -22,22 +28,33 @@ public class Game extends Canvas implements Runnable
 
     public static JFrame frame;
 
-    private transient Thread thread;
+    private Thread thread;
 
     private boolean isRunning = true;
 
-    private static final int WIDTH = 240;
-    private static final int HEIGHT = 160;
-    private static final int SCALE = 4;
+    private final int WIDTH = 240;
+    private final int HEIGHT = 160;
+    private final int SCALE = 4;
 
-    private transient BufferedImage image;
-
+    private BufferedImage image;
+    
+    public List<Entity> entities;
+    
+    public Spritesheet spritesheet;
     
     // Constructor
     public Game() {
     	setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
     	initFrame();
+    	//Starting objects
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    	entities = new ArrayList<Entity>();
+    	spritesheet = new Spritesheet("/spriteSheetNewPosition.png");
+    	
+    	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
+    	Player player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
+    	
+    	entities.add(player);
     }
 
     public void initFrame()
@@ -52,14 +69,14 @@ public class Game extends Canvas implements Runnable
         frame.setVisible(true);
     }
 
-    public synchronized void start()
+    public synchronized void startGame()
     {
         thread = new Thread(this);
         isRunning = true;
         thread.start();
     }
 
-    public synchronized void stop()
+    public synchronized void stopGame()
     {
         isRunning = false;
         try
@@ -77,16 +94,20 @@ public class Game extends Canvas implements Runnable
     public static void main(String[] args)
     {
         Game game = new Game();
-        game.start();
+        game.startGame();
     }
 
-    public void beatUpdate()
+    public void beatUpdateGame()
     {
-        //Something
+        for (int index = 0; index < entities.size(); index++)
+        {
+        	Entity entity = entities.get(index);
+        	entity.updateEntity();
+        }
     }
 
 
-    public void render()
+    public void renderGame()
     {
         //To organize complex memory on the Canvas
         BufferStrategy bs = this.getBufferStrategy();
@@ -96,17 +117,22 @@ public class Game extends Canvas implements Runnable
             return;
         }
         //To draw onto Canvas
-        Graphics graphic = image.getGraphics();
-        graphic.setColor(new Color(19,19,19));
-        graphic.fillRect(0, 0, WIDTH, HEIGHT);
+        Graphics gameGraphics = image.getGraphics();
+        gameGraphics.setColor(new Color(19,19,19));
+        gameGraphics.fillRect(0, 0, WIDTH, HEIGHT);
         
         //Game Rendering
-        //Graphics2D graphic2D = (Graphics2D) graphic;
+        //Graphics2D graphic2D = (Graphics2D) gameGraphics;
+        for (int index = 0; index < entities.size(); index++)
+        {
+        	Entity entity = entities.get(index);
+        	entity.renderEntity(gameGraphics);
+        }
 
         /***/
-        graphic.dispose();
-        graphic = bs.getDrawGraphics();
-        graphic.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE,null);
+        gameGraphics.dispose();
+        gameGraphics = bs.getDrawGraphics();
+        gameGraphics.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE,null);
         bs.show();
     }
 
@@ -127,8 +153,8 @@ public class Game extends Canvas implements Runnable
 
             if (delta >= 1)
             {
-                beatUpdate();
-                render();
+                beatUpdateGame();
+                renderGame();
                 framesPerSecond++;
                 delta--;
             }
@@ -141,7 +167,7 @@ public class Game extends Canvas implements Runnable
             }
             /**System.out.println("My game is running!...");*/
         }
-        stop();
+        stopGame();
 
     }
 
