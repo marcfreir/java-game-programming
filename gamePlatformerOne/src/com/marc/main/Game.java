@@ -55,10 +55,10 @@ public class Game extends Canvas implements Runnable, KeyListener
     	setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
     	initFrame();
     	//Starting objects
-    	world = new World("/map.png");
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     	entities = new ArrayList<Entity>();
     	spritesheet = new Spritesheet("/spriteSheet.png");
+    	world = new World("/map.png");
     	
     	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
     	player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
