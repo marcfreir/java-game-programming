@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 //import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 //import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -20,7 +22,7 @@ import com.marc.graphics.Spritesheet;
 /**
  * Graphics
  */
-public class Game extends Canvas implements Runnable
+public class Game extends Canvas implements Runnable, KeyListener
 {
 
 
@@ -42,8 +44,11 @@ public class Game extends Canvas implements Runnable
     
     public Spritesheet spritesheet;
     
+    private Player player;
+    
     // Constructor
     public Game() {
+    	addKeyListener(this);
     	setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
     	initFrame();
     	//Starting objects
@@ -52,7 +57,7 @@ public class Game extends Canvas implements Runnable
     	spritesheet = new Spritesheet("/spriteSheetNewPosition.png");
     	
     	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
-    	Player player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
+    	player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
     	
     	entities.add(player);
     }
@@ -86,7 +91,7 @@ public class Game extends Canvas implements Runnable
         catch (InterruptedException exception)
         {
             exception.printStackTrace();
-            Thread.currentThread().interrupt();
+            //Thread.currentThread().interrupt();
         }
     }
 
@@ -132,7 +137,7 @@ public class Game extends Canvas implements Runnable
         /***/
         gameGraphics.dispose();
         gameGraphics = bs.getDrawGraphics();
-        gameGraphics.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE,null);
+        gameGraphics.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
         bs.show();
     }
 
@@ -170,6 +175,74 @@ public class Game extends Canvas implements Runnable
         stopGame();
 
     }
+
+	@Override
+	public void keyTyped(KeyEvent event)
+	{
+		//TODO
+	}
+
+	@Override
+	public void keyPressed(KeyEvent event)
+	{
+		//Keyboard Event Directions - Move
+		//Right
+		if (event.getKeyCode() == KeyEvent.VK_RIGHT || event.getKeyCode() == KeyEvent.VK_D)
+		{
+			player.playerRight = true;
+			System.out.println("Right Direction Key - Moved");
+		}
+		//Left
+		else if (event.getKeyCode() == KeyEvent.VK_LEFT || event.getKeyCode() == KeyEvent.VK_A)
+		{
+			player.playerLeft = true;
+			System.out.println("Left Direction Key - Moved");
+		}
+		//Up
+		if (event.getKeyCode() == KeyEvent.VK_UP || event.getKeyCode() == KeyEvent.VK_W)
+		{
+			player.playerUp = true;
+			System.out.println("Up Direction Key - Moved");
+		}
+		//Down
+		else if (event.getKeyCode() == KeyEvent.VK_DOWN || event.getKeyCode() == KeyEvent.VK_S)
+		{
+			player.playerDown = true;
+			System.out.println("Down Direction Key - Moved");
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent event)
+	{
+		//Keyboard Event Directions - Stop
+		//Right
+		if (event.getKeyCode() == KeyEvent.VK_RIGHT || event.getKeyCode() == KeyEvent.VK_D)
+		{
+			player.playerRight = false;
+			System.out.println("Right Direction Key - Stoped");
+		}
+		//Left
+		else if (event.getKeyCode() == KeyEvent.VK_LEFT || event.getKeyCode() == KeyEvent.VK_A)
+		{
+			player.playerLeft = false;
+			System.out.println("Left Direction Key - Stoped");
+		}
+		//Up
+		if (event.getKeyCode() == KeyEvent.VK_UP || event.getKeyCode() == KeyEvent.VK_W)
+		{
+			player.playerUp = false;
+			System.out.println("Up Direction Key - Stoped");
+		}
+		//Down
+		else if (event.getKeyCode() == KeyEvent.VK_DOWN || event.getKeyCode() == KeyEvent.VK_S)
+		{
+			player.playerDown = false;
+			System.out.println("Down Direction Key - Stoped");
+		}
+		
+	}
 
     
 }
