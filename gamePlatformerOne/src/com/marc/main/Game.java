@@ -42,7 +42,7 @@ public class Game extends Canvas implements Runnable, KeyListener
     
     public List<Entity> entities;
     
-    public Spritesheet spritesheet;
+    public static Spritesheet spritesheet;
     
     private Player player;
     
@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable, KeyListener
     	//Starting objects
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     	entities = new ArrayList<Entity>();
-    	spritesheet = new Spritesheet("/spriteSheetNewPosition.png");
+    	spritesheet = new Spritesheet("/spriteSheet.png");
     	
     	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
     	player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
@@ -106,8 +106,11 @@ public class Game extends Canvas implements Runnable, KeyListener
     {
         for (int index = 0; index < entities.size(); index++)
         {
-        	Entity entity = entities.get(index);
-        	entity.updateEntity();
+        	//Entity entity = entities.get(index);
+        	//entity.updateEntity();
+        	//Changed to player - return to the original code above in case of errors
+        	Entity player = entities.get(index);
+        	player.updateEntity();
         }
     }
 
