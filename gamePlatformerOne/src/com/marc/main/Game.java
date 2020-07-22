@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import com.marc.entities.Entity;
 import com.marc.entities.Player;
 import com.marc.graphics.Spritesheet;
+import com.marc.world.World;
 
 /**
  * Graphics
@@ -44,6 +45,8 @@ public class Game extends Canvas implements Runnable, KeyListener
     
     public static Spritesheet spritesheet;
     
+    public static World world;
+    
     private Player player;
     
     // Constructor
@@ -52,6 +55,7 @@ public class Game extends Canvas implements Runnable, KeyListener
     	setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
     	initFrame();
     	//Starting objects
+    	world = new World("/map.png");
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     	entities = new ArrayList<Entity>();
     	spritesheet = new Spritesheet("/spriteSheet.png");
@@ -131,6 +135,7 @@ public class Game extends Canvas implements Runnable, KeyListener
         
         //Game Rendering
         //Graphics2D graphic2D = (Graphics2D) gameGraphics;
+        world.renderWorld(gameGraphics);
         for (int index = 0; index < entities.size(); index++)
         {
         	Entity entity = entities.get(index);
