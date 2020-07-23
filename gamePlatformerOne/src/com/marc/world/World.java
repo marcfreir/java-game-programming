@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.marc.main.Game;
+
 public class World
 {
 	private Tile[] tiles;
@@ -32,25 +34,53 @@ public class World
 				{
 					int currentPixel = pixels[indexWidth + (indexHeight * map.getWidth())];
 					
+					//Floor
+					tiles[indexWidth + (indexHeight * WORLD_WIDTH)] = new FloorTile(indexWidth * 16, indexHeight * 16, Tile.TILE_FLOOR);
+					
 					if (currentPixel == 0xFF000000)
 					{
-						//Floor
+						//Floor - Map Color: Black
 						tiles[indexWidth + (indexHeight * WORLD_WIDTH)] = new FloorTile(indexWidth * 16, indexHeight * 16, Tile.TILE_FLOOR);
 					}
 					else if (currentPixel == 0xFFFFFFFF)
 					{
-						//Wall
+						//Wall - Map Color: White
 						tiles[indexWidth + (indexHeight * WORLD_WIDTH)] = new FloorTile(indexWidth * 16, indexHeight * 16, Tile.TILE_WALL);
 					}
 					else if (currentPixel == 0xFF4800FF)
 					{
-						//Player
-						tiles[indexWidth + (indexHeight * WORLD_WIDTH)] = new FloorTile(indexWidth * 16, indexHeight * 16, Tile.TILE_FLOOR);
+						//Player - Map Color: Electric Purple
+						//tiles[indexWidth + (indexHeight * WORLD_WIDTH)] = new FloorTile(indexWidth * 16, indexHeight * 16, Tile.TILE_FLOOR);
+						Game.player.setEntityX(indexWidth * 16);
+						Game.player.setEntityY(indexHeight * 16);
+					}
+					else if (currentPixel == 0xFF7F0000)
+					{
+						//Enemy - Map Color: Maroon (Dark Red)
+					}
+					else if (currentPixel == 0xFF0026FF)
+					{
+						//Gun - Map Color: Blue
+					}
+					else if (currentPixel == 0xFFFF0000)
+					{
+						//Life Pack - Map Color: Red
+					}
+					else if (currentPixel == 0xFF303030)
+					{
+						//Gun Magazines - Map Color: Night Rider (Dark Gray)
+					}
+					else if (currentPixel == 0xFF007F0E)
+					{
+						//Arrows - Map Color: Green
+					}
+					else if (currentPixel == 0xFF7F3300)
+					{
+						//Bow - Map Color: Saddle Brown (Brown)
 					}
 					else
 					{
-						//Floor
-						tiles[indexWidth + (indexHeight * WORLD_WIDTH)] = new FloorTile(indexWidth * 16, indexHeight * 16, Tile.TILE_FLOOR);
+						//to do
 					}
 				}
 			}

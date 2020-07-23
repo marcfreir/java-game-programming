@@ -37,7 +37,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 
     private final int WIDTH = 240;
     private final int HEIGHT = 160;
-    private final int SCALE = 4;
+    private final int SCALE = 3;
 
     private BufferedImage image;
     
@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable, KeyListener
     
     public static World world;
     
-    private Player player;
+    public static Player player;
     
     // Constructor
     public Game() {
@@ -58,12 +58,10 @@ public class Game extends Canvas implements Runnable, KeyListener
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     	entities = new ArrayList<Entity>();
     	spritesheet = new Spritesheet("/spriteSheet.png");
-    	world = new World("/map.png");
-    	
     	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
     	player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
-    	
     	entities.add(player);
+    	world = new World("/map.png");
     }
 
     public void initFrame()
