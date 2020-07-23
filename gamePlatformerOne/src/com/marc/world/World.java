@@ -6,8 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.marc.entities.Enemy;
-import com.marc.entities.Entity;
+import com.marc.entities.*;
 import com.marc.main.Game;
 
 public class World
@@ -64,23 +63,27 @@ public class World
 					else if (currentPixel == 0xFF0026FF)
 					{
 						//Gun - Map Color: Blue
-						Game.entities.add(new Enemy(indexWidth * 16, indexHeight * 16, 16, 16, Entity.GUN_ENTITY));
+						Game.entities.add(new Gun(indexWidth * 16, indexHeight * 16, 16, 16, Entity.GUN_ENTITY));
 					}
 					else if (currentPixel == 0xFFFF0000)
 					{
 						//Life Pack - Map Color: Red
+						Game.entities.add(new LifePack(indexWidth * 16, indexHeight * 16, 16, 16, Entity.LIFEPACK_ENTITY));
 					}
 					else if (currentPixel == 0xFF303030)
 					{
 						//Gun Magazines - Map Color: Night Rider (Dark Gray)
+						Game.entities.add(new GunMagazine(indexWidth * 16, indexHeight * 16, 16, 16, Entity.GUN_MAGAZINE_ENTITY));
 					}
 					else if (currentPixel == 0xFF007F0E)
 					{
 						//Arrows - Map Color: Green
+						Game.entities.add(new Arrow(indexWidth * 16, indexHeight * 16, 16, 16, Entity.ARROW_ENTITY));
 					}
 					else if (currentPixel == 0xFF7F3300)
 					{
 						//Bow - Map Color: Saddle Brown (Brown)
+						Game.entities.add(new Bow(indexWidth * 16, indexHeight * 16, 16, 16, Entity.BOW_ENTITY));
 					}
 					else
 					{
