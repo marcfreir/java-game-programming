@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.marc.entities.Enemy;
+import com.marc.entities.Entity;
 import com.marc.main.Game;
 
 public class World
@@ -57,10 +59,12 @@ public class World
 					else if (currentPixel == 0xFF7F0000)
 					{
 						//Enemy - Map Color: Maroon (Dark Red)
+						Game.entities.add(new Enemy(indexWidth * 16, indexHeight * 16, 16, 16, Entity.ENEMY_ENTITY));
 					}
 					else if (currentPixel == 0xFF0026FF)
 					{
 						//Gun - Map Color: Blue
+						Game.entities.add(new Enemy(indexWidth * 16, indexHeight * 16, 16, 16, Entity.GUN_ENTITY));
 					}
 					else if (currentPixel == 0xFFFF0000)
 					{

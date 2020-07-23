@@ -7,12 +7,12 @@ import com.marc.main.Game;
 
 public class Entity
 {
-	public static int lifePackPosition = 7;
-	public static int gunPosition = 8;
-	public static int enemyPosition = 9;
-	public static int gunMagazinePosition = 7;
-	public static int arrowPosition = 8;
-	public static int bowPosition = 9;
+	public static int lifePackPosition = 6;
+	public static int gunPosition = 7;
+	public static int enemyPosition = 8;
+	public static int gunMagazinePosition = 6;
+	public static int arrowPosition = 7;
+	public static int bowPosition = 8;
 	public static int spriteSheetWidth = 16;
 	public static int spriteSheetHeight = 16;
 	public static int firstLineAxisY = 0;
