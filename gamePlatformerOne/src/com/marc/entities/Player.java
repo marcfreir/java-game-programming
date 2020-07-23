@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.marc.main.Game;
+import com.marc.world.Camera;
 
 public class Player extends Entity
 {
@@ -102,6 +103,8 @@ public class Player extends Entity
 				}
 			}
 		}
+		Camera.cameraX = this.getEntityX() - (Game.WIDTH / 2);
+		Camera.cameraY = this.getEntityY() - (Game.HEIGHT / 2);
 	}
 	
 	@Override
@@ -109,11 +112,11 @@ public class Player extends Entity
 	{
 		if (forwardDirection == rightDirection)
 		{
-			entityGraphics.drawImage(rightPlayerOrientation[indexFrames], this.getEntityX(), this.getEntityY(), null);
+			entityGraphics.drawImage(rightPlayerOrientation[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
 		}
 		else if (forwardDirection == leftDirection)
 		{
-			entityGraphics.drawImage(leftPlayerOrientation[indexFrames], this.getEntityX(), this.getEntityY(), null);
+			entityGraphics.drawImage(leftPlayerOrientation[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
 		}
 	}
 	
