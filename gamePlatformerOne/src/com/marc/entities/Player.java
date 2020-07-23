@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import com.marc.main.Game;
 import com.marc.world.Camera;
+import com.marc.world.World;
 
 public class Player extends Entity
 {
@@ -103,8 +104,8 @@ public class Player extends Entity
 				}
 			}
 		}
-		Camera.cameraX = this.getEntityX() - (Game.WIDTH / 2);
-		Camera.cameraY = this.getEntityY() - (Game.HEIGHT / 2);
+		Camera.cameraX = Camera.clamp((this.getEntityX() - (Game.WIDTH / 2)), 0, (World.WORLD_WIDTH * 16 - Game.WIDTH));
+		Camera.cameraY = Camera.clamp((this.getEntityY() - (Game.HEIGHT / 2)), 0, (World.WORLD_HEIGHT * 16 - Game.HEIGHT));
 	}
 	
 	@Override

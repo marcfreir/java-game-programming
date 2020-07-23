@@ -100,10 +100,20 @@ public class World
 	
 	public void renderWorld(Graphics worldGraphics)
 	{
-		for (int indexWidth = 0; indexWidth < WORLD_WIDTH; indexWidth++)
+		int startX = (Camera.cameraX >> 4);
+		int startY = (Camera.cameraY >> 4);
+		
+		int finalX = startX + (Game.WIDTH >> 4);
+		int finalY = startY + (Game.HEIGHT >> 4);
+		
+		for (int indexWidth = startX; indexWidth <= finalX; indexWidth++)
 		{
-			for (int indexHeight = 0; indexHeight < WORLD_HEIGHT; indexHeight++)
+			for (int indexHeight = startY; indexHeight <= finalY; indexHeight++)
 			{
+				if (indexWidth < 0 || indexHeight < 0 || indexWidth >= WORLD_WIDTH || indexHeight >= WORLD_HEIGHT)
+				{
+					continue;
+				}
 				Tile tile = tiles[indexWidth + (indexHeight * WORLD_WIDTH)];
 				tile.renderTile(worldGraphics);
 			}
