@@ -11,10 +11,12 @@ import com.marc.main.Game;
 
 public class World
 {
-	private Tile[] tiles;
+	public static Tile[] tiles;
 	
 	public static int WORLD_WIDTH;
 	public static int WORLD_HEIGHT;
+	
+	public static final int TILE_SIZE = 16;
 	
 	public World(String path)
 	{
@@ -46,7 +48,7 @@ public class World
 					else if (currentPixel == 0xFFFFFFFF)
 					{
 						//Wall - Map Color: White
-						tiles[indexWidth + (indexHeight * WORLD_WIDTH)] = new FloorTile(indexWidth * 16, indexHeight * 16, Tile.TILE_WALL);
+						tiles[indexWidth + (indexHeight * WORLD_WIDTH)] = new WallTile(indexWidth * 16, indexHeight * 16, Tile.TILE_WALL);
 					}
 					else if (currentPixel == 0xFF4800FF)
 					{
@@ -96,6 +98,26 @@ public class World
 		{
 			exception.printStackTrace();
 		}
+	}
+	
+	public static boolean placeIsFree(int nextX, int nextY)
+	{
+		int x1 = nextX / TILE_SIZE;
+		int y1 = nextY / TILE_SIZE;
+		
+		int x2 = ((nextX + TILE_SIZE) - 1) / TILE_SIZE;
+		int y2 = nextY / TILE_SIZE;
+		
+		int x3 = nextX / TILE_SIZE;
+		int y3 = ((nextY + TILE_SIZE) - 1) / TILE_SIZE;
+		
+		int x4 = ((nextX + TILE_SIZE) - 1) / TILE_SIZE;
+		int y4 = ((nextY + TILE_SIZE) - 1) / TILE_SIZE;
+		
+		return !((tiles[x1 + (y1 * World.WORLD_WIDTH)] instanceof WallTile) || 
+				 (tiles[x2 + (y2 * World.WORLD_WIDTH)] instanceof WallTile) || 
+				 (tiles[x3 + (y3 * World.WORLD_WIDTH)] instanceof WallTile) || 
+				 (tiles[x4 + (y4 * World.WORLD_WIDTH)] instanceof WallTile));
 	}
 	
 	public void renderWorld(Graphics worldGraphics)

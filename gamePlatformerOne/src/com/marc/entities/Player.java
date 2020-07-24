@@ -64,25 +64,25 @@ public class Player extends Entity
 	public void updateEntity()
 	{
 		playerMoved = false;
-		if (playerRight)
+		if (playerRight && World.placeIsFree((int)(entityX + playerSpeed), this.getEntityY()))
 		{
 			playerMoved = true;
 			forwardDirection = rightDirection;
 			entityX += playerSpeed;
 		}
-		else if (playerLeft)
+		else if (playerLeft && World.placeIsFree((int)(entityX - playerSpeed), this.getEntityY()))
 		{
 			playerMoved = true;
 			forwardDirection = leftDirection;
 			entityX -= playerSpeed;
 		}
 		
-		if (playerUp)
+		if (playerUp && World.placeIsFree(this.getEntityX(), (int)(entityY - playerSpeed)))
 		{
 			playerMoved = true;
 			entityY -= playerSpeed;
 		}
-		else if (playerDown)
+		else if (playerDown && World.placeIsFree(this.getEntityX(), (int)(entityY + playerSpeed)))
 		{
 			playerMoved = true;
 			entityY += playerSpeed;
