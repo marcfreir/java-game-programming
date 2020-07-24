@@ -12,9 +12,11 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
+import com.marc.entities.Enemy;
 import com.marc.entities.Entity;
 import com.marc.entities.Player;
 import com.marc.graphics.Spritesheet;
@@ -43,20 +45,26 @@ public class Game extends Canvas implements Runnable, KeyListener
     
     public static List<Entity> entities;
     
+    public static List<Enemy> enemies;
+    
     public static Spritesheet spritesheet;
     
     public static World world;
     
     public static Player player;
     
+    public static Random random;
+    
     // Constructor
     public Game() {
+    	random = new Random();
     	addKeyListener(this);
     	setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
     	initFrame();
     	//Starting objects
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     	entities = new ArrayList<Entity>();
+    	enemies = new ArrayList<Enemy>();
     	spritesheet = new Spritesheet("/spriteSheet.png");
     	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
     	player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));

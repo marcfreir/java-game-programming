@@ -60,7 +60,9 @@ public class World
 					else if (currentPixel == 0xFF7F0000)
 					{
 						//Enemy - Map Color: Maroon (Dark Red)
-						Game.entities.add(new Enemy(indexWidth * 16, indexHeight * 16, 16, 16, Entity.ENEMY_ENTITY));
+						Enemy enemy = new Enemy(indexWidth * 16, indexHeight * 16, 16, 16, Entity.ENEMY_ENTITY);
+						Game.entities.add(enemy);
+						Game.enemies.add(enemy);
 					}
 					else if (currentPixel == 0xFF0026FF)
 					{
