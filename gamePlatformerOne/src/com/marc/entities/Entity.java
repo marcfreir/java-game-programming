@@ -13,7 +13,7 @@ public class Entity
 	public static int lifePackPosition = 6;
 	public static int gunPosition = 7;
 	public static int enemyPosition = 8;
-	public static int gunMagazinePosition = 6;
+	public static int ammoPosition = 6;
 	public static int arrowPosition = 7;
 	public static int bowPosition = 8;
 	public static int spriteSheetWidth = 16;
@@ -24,7 +24,7 @@ public class Entity
 	public static BufferedImage LIFEPACK_ENTITY = Game.spritesheet.getSprite((lifePackPosition * spriteSheetWidth), firstLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage GUN_ENTITY = Game.spritesheet.getSprite((gunPosition * spriteSheetWidth), firstLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage ENEMY_ENTITY = Game.spritesheet.getSprite((enemyPosition * spriteSheetWidth), firstLineAxisY, spriteSheetWidth, spriteSheetHeight);
-	public static BufferedImage GUN_MAGAZINE_ENTITY = Game.spritesheet.getSprite((gunMagazinePosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage AMMO_ENTITY = Game.spritesheet.getSprite((ammoPosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage ARROW_ENTITY = Game.spritesheet.getSprite((arrowPosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage BOW_ENTITY = Game.spritesheet.getSprite((bowPosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	

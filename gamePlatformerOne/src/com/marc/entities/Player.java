@@ -31,6 +31,11 @@ public class Player extends Entity
 	private BufferedImage[] rightPlayerOrientation;
 	private BufferedImage[] leftPlayerOrientation;
 	
+	//Ammo and Arrows
+	public int ammo = 0;
+	public int arrows = 0;
+	
+	
 	public static double playerLife = 100;
 	public static double playerMaxLife = 100;
 
@@ -109,9 +114,47 @@ public class Player extends Entity
 		}
 		
 		checkCollisionLifePack();
+		checkCollisionAmmo();
+		checkCollisionArrow();
 		
 		Camera.cameraX = Camera.clamp((this.getEntityX() - (Game.WIDTH / 2)), 0, (World.WORLD_WIDTH * 16 - Game.WIDTH));
 		Camera.cameraY = Camera.clamp((this.getEntityY() - (Game.HEIGHT / 2)), 0, (World.WORLD_HEIGHT * 16 - Game.HEIGHT));
+	}
+	
+	public void checkCollisionAmmo()
+	{
+		for (int index = 0; index < Game.entities.size(); index++)
+		{
+			Entity currentAmmo = Game.entities.get(index);
+			
+			if (currentAmmo instanceof Ammo)
+			{
+				if (Entity.isCollidingEntity(this, currentAmmo))
+				{
+					ammo +=10;
+					//System.out.println("Current Ammo: " + ammo); <-//Just for debugging
+					Game.entities.remove(currentAmmo);
+				}
+			}
+		}
+	}
+	
+	public void checkCollisionArrow()
+	{
+		for (int index = 0; index < Game.entities.size(); index++)
+		{
+			Entity currentArrows = Game.entities.get(index);
+			
+			if (currentArrows instanceof Arrow)
+			{
+				if (Entity.isCollidingEntity(this, currentArrows))
+				{
+					arrows +=10;
+					//System.out.println("Current Arrows: " + arrows); <-//Just for debugging
+					Game.entities.remove(currentArrows);
+				}
+			}
+		}
 	}
 	
 	public void checkCollisionLifePack()

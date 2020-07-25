@@ -3,6 +3,7 @@ package com.marc.main;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 //import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -158,6 +159,10 @@ public class Game extends Canvas implements Runnable, KeyListener
         gameGraphics.dispose();
         gameGraphics = bs.getDrawGraphics();
         gameGraphics.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+        gameGraphics.setFont(new Font("Arial", Font.BOLD, 17));
+        gameGraphics.setColor(Color.white);
+        gameGraphics.drawString("Ammo:   " + player.ammo, ((WIDTH * SCALE) - 100), ((HEIGHT * SCALE) - ((HEIGHT * SCALE) - 20)));
+        gameGraphics.drawString("Arrows: " + player.arrows, ((WIDTH * SCALE) - 100), ((HEIGHT * SCALE) - ((HEIGHT * SCALE) - 40)));
         bs.show();
     }
 

@@ -82,7 +82,7 @@ public class World
 					else if (currentPixel == 0xFF303030)
 					{
 						//Gun Magazines - Map Color: Night Rider (Dark Gray)
-						Game.entities.add(new GunMagazine(indexWidth * 16, indexHeight * 16, 16, 16, Entity.GUN_MAGAZINE_ENTITY));
+						Game.entities.add(new Ammo(indexWidth * 16, indexHeight * 16, 16, 16, Entity.AMMO_ENTITY));
 					}
 					else if (currentPixel == 0xFF007F0E)
 					{
