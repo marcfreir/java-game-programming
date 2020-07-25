@@ -11,16 +11,26 @@ import com.marc.world.World;
 
 public class Enemy extends Entity
 {
-	private double enemySpeed = 1.0;
+	private double enemySpeed = 0.7;
 	
 	private int maskX = 8;
 	private int maskY = 8;
 	private int maskWidth = 10;
 	private int maskHeight = 10;
+	
+	private int frames = 0;
+	private int maxFrames = 20;
+	private int indexFrames = 0;
+	private int maxIndexFrames = 1;
+	
+	private BufferedImage[] enemiesSprites;
 
 	public Enemy(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite)
 	{
-		super(entityX, entityY, entityWidth, entityHeight, sprite);
+		super(entityX, entityY, entityWidth, entityHeight, null);
+		enemiesSprites = new BufferedImage[2];
+		enemiesSprites[0] = Game.spritesheet.getSprite(128, 0, 16, 16);
+		enemiesSprites[1] = Game.spritesheet.getSprite((128 + 16), 0, 16, 16);
 	}
 	
 	/**
@@ -31,10 +41,12 @@ public class Enemy extends Entity
 	@Override
 	public void updateEntity()
 	{
+		/*
 		maskX = 8;
 		maskY = 8;
 		maskWidth = 5;
 		maskHeight = 5;
+		*/
 		
 		//Wrap all the IF/ELSE IF statements bellow this first IF to disperse the enemies randomly
 		//if (Game.random.nextInt(100) < 50)
@@ -60,6 +72,21 @@ public class Enemy extends Entity
 		{
 			entityY -= enemySpeed;
 		}
+		
+		//For the animation
+		frames++;
+		
+		if (frames == maxFrames)
+		{
+			frames = 0;
+			indexFrames++;
+			
+			if (indexFrames > maxIndexFrames)
+			{
+				indexFrames = 0;
+			}
+		}
+		
 		
 	}
 	
@@ -89,9 +116,12 @@ public class Enemy extends Entity
 	@Override
 	public void renderEntity(Graphics entityGraphics)
 	{
-		super.renderEntity(entityGraphics);
-		entityGraphics.setColor(Color.magenta);
-		entityGraphics.fillRect(((this.getEntityX() + maskX) - Camera.cameraX), ((this.getEntityY() + maskY) - Camera.cameraY), maskWidth, maskHeight);
+		entityGraphics.drawImage(enemiesSprites[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+		//super.renderEntity(entityGraphics);
+		
+		//Set Mask
+		//entityGraphics.setColor(Color.magenta);
+		//entityGraphics.fillRect(((this.getEntityX() + maskX) - Camera.cameraX), ((this.getEntityY() + maskY) - Camera.cameraY), maskWidth, maskHeight);
 	}
 	
 }
