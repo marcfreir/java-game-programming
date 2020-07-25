@@ -1,6 +1,6 @@
 package com.marc.entities;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -51,26 +51,45 @@ public class Enemy extends Entity
 		//Wrap all the IF/ELSE IF statements bellow this first IF to disperse the enemies randomly
 		//if (Game.random.nextInt(100) < 50)
 		
-		if (((int)entityX < Game.player.getEntityX()) && (World.placeIsFree((int)(entityX + enemySpeed), this.getEntityY()))
-				&& !(isColliding((int)(entityX + enemySpeed), this.getEntityY())))
+		if (isCollidingWithPlayer() == false)
 		{
-			entityX += enemySpeed;
+			if (((int)entityX < Game.player.getEntityX()) && (World.placeIsFree((int)(entityX + enemySpeed), this.getEntityY()))
+					&& !(isColliding((int)(entityX + enemySpeed), this.getEntityY())))
+			{
+				entityX += enemySpeed;
+			}
+			else if ((int)entityX > Game.player.getEntityX() && World.placeIsFree((int)(entityX - enemySpeed), this.getEntityY())
+					&& !(isColliding((int)(entityX - enemySpeed), this.getEntityY())))
+			{
+				entityX -= enemySpeed;
+			}
+			
+			else if ((int)entityY < Game.player.getEntityY() && World.placeIsFree(this.getEntityX(), (int)(entityY + enemySpeed))
+					&& !(isColliding(this.getEntityX(), (int)(entityY + enemySpeed))))
+			{
+				entityY += enemySpeed;
+			}
+			else if ((int)entityY > Game.player.getEntityY() && World.placeIsFree(this.getEntityX(), (int)(entityY - enemySpeed))
+					&& !(isColliding(this.getEntityX(), (int)(entityY - enemySpeed))))
+			{
+				entityY -= enemySpeed;
+			}
 		}
-		else if ((int)entityX > Game.player.getEntityX() && World.placeIsFree((int)(entityX - enemySpeed), this.getEntityY())
-				&& !(isColliding((int)(entityX - enemySpeed), this.getEntityY())))
+		else
 		{
-			entityX -= enemySpeed;
-		}
-		
-		else if ((int)entityY < Game.player.getEntityY() && World.placeIsFree(this.getEntityX(), (int)(entityY + enemySpeed))
-				&& !(isColliding(this.getEntityX(), (int)(entityY + enemySpeed))))
-		{
-			entityY += enemySpeed;
-		}
-		else if ((int)entityY > Game.player.getEntityY() && World.placeIsFree(this.getEntityX(), (int)(entityY - enemySpeed))
-				&& !(isColliding(this.getEntityX(), (int)(entityY - enemySpeed))))
-		{
-			entityY -= enemySpeed;
+			if (Game.random.nextInt(100) < 10)
+			{
+				//We're colliding - The player is losing life
+				Game.player.playerLife -= Game.random.nextInt(5);
+				
+				if (Game.player.playerLife <= 0)
+				{
+					//Game over!
+					System.exit(1);
+				}
+				
+				System.out.println("Life: " + Game.player.playerLife);
+			}
 		}
 		
 		//For the animation
@@ -88,6 +107,14 @@ public class Enemy extends Entity
 		}
 		
 		
+	}
+	
+	public boolean isCollidingWithPlayer()
+	{
+		Rectangle currentEnemy = new Rectangle((this.getEntityX() + maskX), (this.getEntityY() + maskY), maskWidth, maskHeight);
+		Rectangle playerCollision = new Rectangle(Game.player.getEntityX(), Game.player.getEntityY(), 16, 16);
+		
+		return currentEnemy.intersects(playerCollision);
 	}
 	
 	public boolean isColliding(int nextX, int nextY)

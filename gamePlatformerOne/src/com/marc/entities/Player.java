@@ -30,6 +30,9 @@ public class Player extends Entity
 	
 	private BufferedImage[] rightPlayerOrientation;
 	private BufferedImage[] leftPlayerOrientation;
+	
+	public static double playerLife = 100;
+	public static double playerMaxLife = 100;
 
 	public Player(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite)
 	{

@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import com.marc.entities.Enemy;
 import com.marc.entities.Entity;
 import com.marc.entities.Player;
+import com.marc.graphics.LifeUI;
 import com.marc.graphics.Spritesheet;
 import com.marc.world.World;
 
@@ -55,6 +56,8 @@ public class Game extends Canvas implements Runnable, KeyListener
     
     public static Random random;
     
+    public LifeUI lifeUI;
+    
     // Constructor
     public Game() {
     	random = new Random();
@@ -62,6 +65,7 @@ public class Game extends Canvas implements Runnable, KeyListener
     	setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
     	initFrame();
     	//Starting objects
+    	lifeUI = new LifeUI();
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     	entities = new ArrayList<Entity>();
     	enemies = new ArrayList<Enemy>();
@@ -147,6 +151,8 @@ public class Game extends Canvas implements Runnable, KeyListener
         	Entity entity = entities.get(index);
         	entity.renderEntity(gameGraphics);
         }
+        
+        lifeUI.renderLifeUI(gameGraphics);
 
         /***/
         gameGraphics.dispose();
