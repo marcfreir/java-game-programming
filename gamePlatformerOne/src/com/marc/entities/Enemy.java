@@ -25,12 +25,12 @@ public class Enemy extends Entity
 	
 	private BufferedImage[] enemiesSprites;
 
-	public Enemy(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite)
+	public Enemy(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage[] sprite)
 	{
 		super(entityX, entityY, entityWidth, entityHeight, null);
 		enemiesSprites = new BufferedImage[2];
-		enemiesSprites[0] = Game.spritesheet.getSprite(128, 0, 16, 16);
-		enemiesSprites[1] = Game.spritesheet.getSprite((128 + 16), 0, 16, 16);
+		this.enemiesSprites[0] = sprite[0];
+		this.enemiesSprites[1] = sprite[1];
 	}
 	
 	/**
@@ -54,23 +54,23 @@ public class Enemy extends Entity
 		if (isCollidingWithPlayer() == false)
 		{
 			if (((int)entityX < Game.player.getEntityX()) && (World.placeIsFree((int)(entityX + enemySpeed), this.getEntityY()))
-					&& !(isColliding((int)(entityX + enemySpeed), this.getEntityY())))
+					&& !(isCollidingEnemy((int)(entityX + enemySpeed), this.getEntityY())))
 			{
 				entityX += enemySpeed;
 			}
 			else if ((int)entityX > Game.player.getEntityX() && World.placeIsFree((int)(entityX - enemySpeed), this.getEntityY())
-					&& !(isColliding((int)(entityX - enemySpeed), this.getEntityY())))
+					&& !(isCollidingEnemy((int)(entityX - enemySpeed), this.getEntityY())))
 			{
 				entityX -= enemySpeed;
 			}
 			
 			else if ((int)entityY < Game.player.getEntityY() && World.placeIsFree(this.getEntityX(), (int)(entityY + enemySpeed))
-					&& !(isColliding(this.getEntityX(), (int)(entityY + enemySpeed))))
+					&& !(isCollidingEnemy(this.getEntityX(), (int)(entityY + enemySpeed))))
 			{
 				entityY += enemySpeed;
 			}
 			else if ((int)entityY > Game.player.getEntityY() && World.placeIsFree(this.getEntityX(), (int)(entityY - enemySpeed))
-					&& !(isColliding(this.getEntityX(), (int)(entityY - enemySpeed))))
+					&& !(isCollidingEnemy(this.getEntityX(), (int)(entityY - enemySpeed))))
 			{
 				entityY -= enemySpeed;
 			}
@@ -80,12 +80,12 @@ public class Enemy extends Entity
 			if (Game.random.nextInt(100) < 10)
 			{
 				//We're colliding - The player is losing life
-				Game.player.playerLife -= Game.random.nextInt(5);
+				Game.player.playerLife -= Game.random.nextInt(3);
 				
 				if (Game.player.playerLife <= 0)
 				{
 					//Game over!
-					System.exit(1);
+					//System.exit(1);
 				}
 				
 				System.out.println("Life: " + Game.player.playerLife);
@@ -117,7 +117,7 @@ public class Enemy extends Entity
 		return currentEnemy.intersects(playerCollision);
 	}
 	
-	public boolean isColliding(int nextX, int nextY)
+	public boolean isCollidingEnemy(int nextX, int nextY)
 	{
 		Rectangle currentEnemy = new Rectangle((nextX + maskX), (nextY + maskY), maskWidth, maskHeight);
 		

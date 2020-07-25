@@ -60,7 +60,10 @@ public class World
 					else if (currentPixel == 0xFF7F0000)
 					{
 						//Enemy - Map Color: Maroon (Dark Red)
-						Enemy enemy = new Enemy(indexWidth * 16, indexHeight * 16, 16, 16, Entity.ENEMY_ENTITY);
+						BufferedImage[] bfEnemy = new BufferedImage[2];
+						bfEnemy[0] = Game.spritesheet.getSprite(128, 0, 16, 16);
+						bfEnemy[1] = Game.spritesheet.getSprite(128 + 16, 0, 16, 16);
+						Enemy enemy = new Enemy(indexWidth * 16, indexHeight * 16, 16, 16, bfEnemy);
 						Game.entities.add(enemy);
 						Game.enemies.add(enemy);
 					}
@@ -72,7 +75,9 @@ public class World
 					else if (currentPixel == 0xFFFF0000)
 					{
 						//Life Pack - Map Color: Red
-						Game.entities.add(new LifePack(indexWidth * 16, indexHeight * 16, 16, 16, Entity.LIFEPACK_ENTITY));
+						LifePack lifePack = new LifePack(indexWidth * 16, indexHeight * 16, 16, 16, Entity.LIFEPACK_ENTITY);
+						//lifePack.setEntityMask(8, 8, 8, 8); <-//Just for debugging
+						Game.entities.add(lifePack);
 					}
 					else if (currentPixel == 0xFF303030)
 					{

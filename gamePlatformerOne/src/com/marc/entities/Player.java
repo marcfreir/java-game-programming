@@ -107,8 +107,35 @@ public class Player extends Entity
 				}
 			}
 		}
+		
+		checkCollisionLifePack();
+		
 		Camera.cameraX = Camera.clamp((this.getEntityX() - (Game.WIDTH / 2)), 0, (World.WORLD_WIDTH * 16 - Game.WIDTH));
 		Camera.cameraY = Camera.clamp((this.getEntityY() - (Game.HEIGHT / 2)), 0, (World.WORLD_HEIGHT * 16 - Game.HEIGHT));
+	}
+	
+	public void checkCollisionLifePack()
+	{
+		for (int index = 0; index < Game.entities.size(); index++)
+		{
+			Entity currentLifePack = Game.entities.get(index);
+			
+			if (currentLifePack instanceof LifePack)
+			{
+				if (Entity.isCollidingEntity(this, currentLifePack))
+				{
+					playerLife += 10;
+					
+					if (playerLife >= 100)
+					{
+						playerLife = 100;
+					}
+					Game.entities.remove(currentLifePack);
+					//Game.entities.remove(index);
+					//return;
+				}
+			}
+		}
 	}
 	
 	@Override

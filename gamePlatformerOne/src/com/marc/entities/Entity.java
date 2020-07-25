@@ -1,6 +1,8 @@
 package com.marc.entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.marc.main.Game;
@@ -31,8 +33,15 @@ public class Entity
 	protected int entityWidth;
 	protected int entityHeight;
 	
+	public boolean debug = false;
+	
 	//
 	private BufferedImage sprite;
+	
+	private int entityMaskX;
+	private int entityMaskY;
+	private int entityMaskWidth;
+	private int entityMaskHeight;
 	
 	//Constructor
 	public Entity(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite)
@@ -42,6 +51,19 @@ public class Entity
 		this.entityWidth = entityWidth;
 		this.entityHeight = entityHeight;
 		this.sprite = sprite;
+		
+		this.entityMaskX = 0;
+		this.entityMaskY = 0;
+		this.entityMaskWidth = entityWidth;
+		this.entityMaskHeight = entityHeight;
+	}
+	
+	public void setEntityMask(int entityMaskX, int entityMaskY, int entityMaskWidth, int entityMaskHeight)
+	{
+		this.entityMaskX = entityMaskX;
+		this.entityMaskY = entityMaskY;
+		this.entityMaskWidth = entityMaskWidth;
+		this.entityMaskHeight = entityMaskHeight;
 	}
 	
 	//Getters
@@ -81,9 +103,19 @@ public class Entity
 		//To do
 	}
 	
+	public static boolean isCollidingEntity(Entity entityOne, Entity entityTwo)
+	{
+		Rectangle maskEntityOne = new Rectangle((entityOne.getEntityX() + entityOne.entityMaskX), (entityOne.getEntityY() + entityOne.entityMaskY), entityOne.entityMaskWidth, entityOne.entityMaskHeight);
+		Rectangle maskEntityTwo = new Rectangle((entityTwo.getEntityX() + entityTwo.entityMaskX), (entityTwo.getEntityY() + entityTwo.entityMaskY), entityTwo.entityMaskWidth, entityTwo.entityMaskHeight);
+		
+		return maskEntityOne.intersects(maskEntityTwo);
+	}
+	
 	//Render
 	public void renderEntity(Graphics entityGraphics)
 	{
 		entityGraphics.drawImage(sprite, (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+		//entityGraphics.setColor(Color.red); <-//Just for debugging
+		//entityGraphics.fillRect(((this.getEntityX() + entityMaskX) - Camera.cameraX), ((this.getEntityY() + entityMaskY) - Camera.cameraY), entityMaskWidth, entityMaskHeight); <-//Just for debugging
 	}
 }
