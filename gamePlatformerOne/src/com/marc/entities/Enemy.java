@@ -81,12 +81,7 @@ public class Enemy extends Entity
 			{
 				//We're colliding - The player is losing life
 				Game.player.playerLife -= Game.random.nextInt(3);
-				
-				if (Game.player.playerLife <= 0)
-				{
-					//Game over!
-					//System.exit(1);
-				}
+				Game.player.isDamaged = true;
 				
 				System.out.println("Life: " + Game.player.playerLife);
 			}

@@ -2,7 +2,9 @@ package com.marc.entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import com.marc.graphics.Spritesheet;
 import com.marc.main.Game;
 import com.marc.world.Camera;
 import com.marc.world.World;
@@ -31,6 +33,11 @@ public class Player extends Entity
 	private BufferedImage[] rightPlayerOrientation;
 	private BufferedImage[] leftPlayerOrientation;
 	
+	private BufferedImage playerDamage;
+	
+	public boolean isDamaged = false;
+	private int damageFrames = 0;
+	
 	//Ammo and Arrows
 	public int ammo = 0;
 	public int arrows = 0;
@@ -43,12 +50,14 @@ public class Player extends Entity
 	{
 		super(entityX, entityY, entityWidth, entityHeight, sprite);
 		
-		rightPlayerOrientation = new BufferedImage[4];
-		leftPlayerOrientation = new BufferedImage[4];
-		
 		int amountOfImagesPerOrientation = 4;
 		int spriteSheetWidth = 16;
 		int spriteSheetHeight = 16;
+		
+		rightPlayerOrientation = new BufferedImage[4];
+		leftPlayerOrientation = new BufferedImage[4];
+		playerDamage = Game.spritesheet.getSprite(0, 16, spriteSheetWidth, spriteSheetHeight);
+		
 		//For the Sprite List to the Right in the spriteSheet.png
 		for (int index = 0; index < amountOfImagesPerOrientation; index++)
 		{
@@ -115,10 +124,40 @@ public class Player extends Entity
 		
 		checkCollisionLifePack();
 		checkCollisionAmmo();
-		checkCollisionArrow();
+		checkCollisionArrows();
+		checkIsDamaged();
+		playerLifeIsOverRestartGame();
 		
 		Camera.cameraX = Camera.clamp((this.getEntityX() - (Game.WIDTH / 2)), 0, (World.WORLD_WIDTH * 16 - Game.WIDTH));
 		Camera.cameraY = Camera.clamp((this.getEntityY() - (Game.HEIGHT / 2)), 0, (World.WORLD_HEIGHT * 16 - Game.HEIGHT));
+	}
+	
+	public void playerLifeIsOverRestartGame()
+	{
+		if (playerLife <= 0)
+		{
+	    	Game.entities = new ArrayList<Entity>();
+	    	Game.enemies = new ArrayList<Enemy>();
+	    	Game.spritesheet = new Spritesheet("/spriteSheet.png");
+	    	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
+	    	Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
+	    	Game.entities.add(Game.player);
+	    	Game.world = new World("/map.png");
+	    	return;
+		}
+	}
+	
+	public void checkIsDamaged()
+	{
+		if (isDamaged)
+		{
+			this.damageFrames++;
+			if (this.damageFrames == 8)
+			{
+				this.damageFrames = 0;
+				isDamaged = false;
+			}
+		}
 	}
 	
 	public void checkCollisionAmmo()
@@ -139,7 +178,7 @@ public class Player extends Entity
 		}
 	}
 	
-	public void checkCollisionArrow()
+	public void checkCollisionArrows()
 	{
 		for (int index = 0; index < Game.entities.size(); index++)
 		{
@@ -184,13 +223,20 @@ public class Player extends Entity
 	@Override
 	public void renderEntity(Graphics entityGraphics)
 	{
-		if (forwardDirection == rightDirection)
+		if (!isDamaged)
 		{
-			entityGraphics.drawImage(rightPlayerOrientation[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+			if (forwardDirection == rightDirection)
+			{
+				entityGraphics.drawImage(rightPlayerOrientation[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+			}
+			else if (forwardDirection == leftDirection)
+			{
+				entityGraphics.drawImage(leftPlayerOrientation[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+			}
 		}
-		else if (forwardDirection == leftDirection)
+		else
 		{
-			entityGraphics.drawImage(leftPlayerOrientation[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+			entityGraphics.drawImage(playerDamage, (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
 		}
 	}
 	
