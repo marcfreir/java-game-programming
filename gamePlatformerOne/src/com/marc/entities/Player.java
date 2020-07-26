@@ -34,6 +34,7 @@ public class Player extends Entity
 	private BufferedImage[] leftPlayerOrientation;
 	
 	private BufferedImage playerDamage;
+	private boolean hasGun;
 	
 	public boolean isDamaged = false;
 	private int damageFrames = 0;
@@ -127,6 +128,7 @@ public class Player extends Entity
 		checkCollisionArrows();
 		checkIsDamaged();
 		playerLifeIsOverRestartGame();
+		checkCollisionGun();
 		
 		Camera.cameraX = Camera.clamp((this.getEntityX() - (Game.WIDTH / 2)), 0, (World.WORLD_WIDTH * 16 - Game.WIDTH));
 		Camera.cameraY = Camera.clamp((this.getEntityY() - (Game.HEIGHT / 2)), 0, (World.WORLD_HEIGHT * 16 - Game.HEIGHT));
@@ -156,6 +158,24 @@ public class Player extends Entity
 			{
 				this.damageFrames = 0;
 				isDamaged = false;
+			}
+		}
+	}
+	
+	public void checkCollisionGun()
+	{
+		for (int index = 0; index < Game.entities.size(); index++)
+		{
+			Entity currentGun = Game.entities.get(index);
+			
+			if (currentGun instanceof Gun)
+			{
+				if (Entity.isCollidingEntity(this, currentGun))
+				{
+					hasGun = true;
+					//System.out.println("Current Gun: " + hasGun); <-//Just for debugging
+					Game.entities.remove(currentGun);
+				}
 			}
 		}
 	}
@@ -228,10 +248,22 @@ public class Player extends Entity
 			if (forwardDirection == rightDirection)
 			{
 				entityGraphics.drawImage(rightPlayerOrientation[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+				
+				if (hasGun)
+				{
+					//Draw Gun to the Right
+					entityGraphics.drawImage(Entity.GUN_ENTITY_RIGHT, ((this.getEntityX() + 2) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
+				}
 			}
 			else if (forwardDirection == leftDirection)
 			{
 				entityGraphics.drawImage(leftPlayerOrientation[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+				
+				if (hasGun)
+				{
+					//Draw Gun to the Left
+					entityGraphics.drawImage(Entity.GUN_ENTITY_LEFT, ((this.getEntityX() - 2) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
+				}
 			}
 		}
 		else
