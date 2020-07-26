@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import com.marc.entities.Enemy;
 import com.marc.entities.Entity;
 import com.marc.entities.Player;
+import com.marc.entities.BulletShoot;
 import com.marc.graphics.LifeUI;
 import com.marc.graphics.Spritesheet;
 import com.marc.world.World;
@@ -49,6 +50,8 @@ public class Game extends Canvas implements Runnable, KeyListener
     
     public static List<Enemy> enemies;
     
+    public static List<BulletShoot> bullets;
+    
     public static Spritesheet spritesheet;
     
     public static World world;
@@ -70,6 +73,7 @@ public class Game extends Canvas implements Runnable, KeyListener
     	image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     	entities = new ArrayList<Entity>();
     	enemies = new ArrayList<Enemy>();
+    	bullets = new ArrayList<BulletShoot>();
     	spritesheet = new Spritesheet("/spriteSheet.png");
     	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
     	player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
@@ -117,7 +121,7 @@ public class Game extends Canvas implements Runnable, KeyListener
         game.startGame();
     }
 
-    public void beatUpdateGame()
+    public void updateGame()
     {
         for (int index = 0; index < entities.size(); index++)
         {
@@ -126,6 +130,11 @@ public class Game extends Canvas implements Runnable, KeyListener
         	//Changed to player - return to the original code above in case of errors
         	Entity player = entities.get(index);
         	player.updateEntity();
+        }
+        
+        for (int index = 0; index < bullets.size(); index++)
+        {
+        	bullets.get(index).updateEntity();
         }
     }
 
@@ -151,6 +160,11 @@ public class Game extends Canvas implements Runnable, KeyListener
         {
         	Entity entity = entities.get(index);
         	entity.renderEntity(gameGraphics);
+        }
+        
+        for (int index = 0; index < bullets.size(); index++)
+        {
+        	bullets.get(index).renderEntity(gameGraphics);
         }
         
         lifeUI.renderLifeUI(gameGraphics);
@@ -184,7 +198,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 
             if (delta >= 1)
             {
-                beatUpdateGame();
+                updateGame();
                 renderGame();
                 framesPerSecond++;
                 delta--;
@@ -235,6 +249,12 @@ public class Game extends Canvas implements Runnable, KeyListener
 		{
 			player.playerDown = true;
 			System.out.println("Down Direction Key - Moved");
+		}
+		
+		//Shoot
+		if (event.getKeyCode() == KeyEvent.VK_X)
+		{
+			player.shoot = true;
 		}
 		
 	}

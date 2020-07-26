@@ -43,6 +43,9 @@ public class Player extends Entity
 	public int ammo = 0;
 	public int arrows = 0;
 	
+	//Shoot
+	public boolean shoot = false;
+	
 	
 	public double playerLife = 100;
 	public double playerMaxLife = 100;
@@ -129,9 +132,20 @@ public class Player extends Entity
 		checkIsDamaged();
 		playerLifeIsOverRestartGame();
 		checkCollisionGun();
+		playerShoot();
 		
 		Camera.cameraX = Camera.clamp((this.getEntityX() - (Game.WIDTH / 2)), 0, (World.WORLD_WIDTH * 16 - Game.WIDTH));
 		Camera.cameraY = Camera.clamp((this.getEntityY() - (Game.HEIGHT / 2)), 0, (World.WORLD_HEIGHT * 16 - Game.HEIGHT));
+	}
+	
+	public void playerShoot()
+	{
+		if (shoot)
+		{
+			//Create bullet and shoot
+			shoot = false;
+			//System.out.println("Shooting"); <-//Just for debugging
+		}
 	}
 	
 	public void playerLifeIsOverRestartGame()
