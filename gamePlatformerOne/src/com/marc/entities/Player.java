@@ -43,8 +43,8 @@ public class Player extends Entity
 	public int arrows = 0;
 	
 	
-	public static double playerLife = 100;
-	public static double playerMaxLife = 100;
+	public double playerLife = 100;
+	public double playerMaxLife = 100;
 
 	public Player(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite)
 	{
