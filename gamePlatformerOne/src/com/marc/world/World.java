@@ -84,16 +84,6 @@ public class World
 						//Gun Magazines - Map Color: Night Rider (Dark Gray)
 						Game.entities.add(new Ammo(indexWidth * 16, indexHeight * 16, 16, 16, Entity.AMMO_ENTITY));
 					}
-					else if (currentPixel == 0xFF007F0E)
-					{
-						//Arrows - Map Color: Green
-						Game.entities.add(new Arrow(indexWidth * 16, indexHeight * 16, 16, 16, Entity.ARROW_ENTITY));
-					}
-					else if (currentPixel == 0xFF7F3300)
-					{
-						//Bow - Map Color: Saddle Brown (Brown)
-						Game.entities.add(new Bow(indexWidth * 16, indexHeight * 16, 16, 16, Entity.BOW_ENTITY));
-					}
 					else
 					{
 						//to do

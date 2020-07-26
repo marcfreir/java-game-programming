@@ -35,15 +35,20 @@ public class Player extends Entity
 	
 	private BufferedImage playerDamage;
 	private boolean hasGun;
+	private boolean hasBow;
 	
 	public boolean isDamaged = false;
 	private int damageFrames = 0;
 	
-	//Ammo
+	//Ammo and Arrows
 	public int ammo = 0;
+	public int arrows = 0;
 	
 	//Shoot
 	public boolean shoot = false;
+	
+	//shootArrow
+	public boolean shootArrow = false;
 	
 	
 	public double playerLife = 100;
@@ -127,16 +132,18 @@ public class Player extends Entity
 		
 		checkCollisionLifePack();
 		checkCollisionAmmo();
+		checkCollisionArrows();
 		checkIsDamaged();
 		playerLifeIsOverRestartGame();
 		checkCollisionGun();
-		playerShoot();
+		playerShootBullet();
+		checkCollisionBow();
 		
 		Camera.cameraX = Camera.clamp((this.getEntityX() - (Game.WIDTH / 2)), 0, (World.WORLD_WIDTH * 16 - Game.WIDTH));
 		Camera.cameraY = Camera.clamp((this.getEntityY() - (Game.HEIGHT / 2)), 0, (World.WORLD_HEIGHT * 16 - Game.HEIGHT));
 	}
 	
-	public void playerShoot()
+	public void playerShootBullet()
 	{
 		if (shoot)
 		{
@@ -145,26 +152,73 @@ public class Player extends Entity
 			
 			if (hasGun && (ammo > 0))
 			{
-			ammo--;
-			
-			//System.out.println("Shooting"); <-//Just for debugging
-			int shootDirectionX = 0;
-			int shootPointX = 0;
-			int shootPointY = 7;
-			
-			if (forwardDirection == rightDirection)
-			{
-				shootPointX = 12;
-				shootDirectionX = 1;
+				ammo--;
+				
+				//System.out.println("Shooting"); <-//Just for debugging
+				int shootDirectionX = 0;
+				int shootPointX = 0;
+				int shootPointY = 7;
+				
+				if (forwardDirection == rightDirection)
+				{
+					shootPointX = 12;
+					shootDirectionX = 1;
+				}
+				else
+				{
+					shootPointX = 0;
+					shootDirectionX = -1;
+				}
+				
+				BulletShoot bullet = new BulletShoot((this.getEntityX() + shootPointX), (this.getEntityY() + shootPointY), 3, 3, null, shootDirectionX, 0);
+				Game.bullets.add(bullet);
 			}
 			else
 			{
-				shootPointX = 0;
-				shootDirectionX = -1;
+				if (ammo == 0)
+				{
+					hasGun = false;
+				}
 			}
+		}
+	}
+	
+	public void playerShootArrow()
+	{
+		if (shootArrow)
+		{
+			//Create arrow and shootArrow
+			shootArrow = false;
 			
-			BulletShoot bullet = new BulletShoot((this.getEntityX() + shootPointX), (this.getEntityY() + shootPointY), 3, 3, null, shootDirectionX, 0);
-			Game.bullets.add(bullet);
+			if (hasBow && (arrows > 0))
+			{
+				arrows--;
+				
+				//System.out.println("Shooting"); <-//Just for debugging
+				int shootDirectionX = 0;
+				int shootPointX = 0;
+				int shootPointY = 7;
+				
+				if (forwardDirection == rightDirection)
+				{
+					shootPointX = 12;
+					shootDirectionX = 1;
+				}
+				else
+				{
+					shootPointX = 0;
+					shootDirectionX = -1;
+				}
+				
+				ArrowShoot arrow = new ArrowShoot((this.getEntityX() + shootPointX), (this.getEntityY() + shootPointY), 8, 1, null, shootDirectionX, 0);
+				Game.arrows.add(arrow);
+			}
+			else
+			{
+				/*if (ammo == 0)
+				{
+					hasGun = false;
+				}*/
 			}
 		}
 	}
@@ -215,6 +269,25 @@ public class Player extends Entity
 		}
 	}
 	
+	public void checkCollisionBow()
+	{
+		for (int index = 0; index < Game.entities.size(); index++)
+		{
+			Entity currentBow = Game.entities.get(index);
+			
+			if (currentBow instanceof Bow)
+			{
+				if (Entity.isCollidingEntity(this, currentBow))
+				{
+					hasGun = false;
+					hasBow = true;
+					//System.out.println("Current Bow: " + hasBow); <-//Just for debugging
+					Game.entities.remove(currentBow);
+				}
+			}
+		}
+	}
+	
 	public void checkCollisionAmmo()
 	{
 		for (int index = 0; index < Game.entities.size(); index++)
@@ -228,6 +301,24 @@ public class Player extends Entity
 					ammo +=10;
 					//System.out.println("Current Ammo: " + ammo); <-//Just for debugging
 					Game.entities.remove(currentAmmo);
+				}
+			}
+		}
+	}
+	
+	public void checkCollisionArrows()
+	{
+		for (int index = 0; index < Game.entities.size(); index++)
+		{
+			Entity currentArrows = Game.entities.get(index);
+			
+			if (currentArrows instanceof Arrow)
+			{
+				if (Entity.isCollidingEntity(this, currentArrows))
+				{
+					arrows +=10;
+					//System.out.println("Current Arrows: " + arrows); <-//Just for debugging
+					Game.entities.remove(currentArrows);
 				}
 			}
 		}
@@ -271,6 +362,11 @@ public class Player extends Entity
 					//Draw Gun to the Right
 					entityGraphics.drawImage(Entity.GUN_ENTITY_RIGHT, ((this.getEntityX() + 2) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
 				}
+				else if (hasBow)
+				{
+					//Draw Bow to the Right
+					entityGraphics.drawImage(Entity.BOW_ENTITY_RIGHT, ((this.getEntityX() + 3) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
+				}
 			}
 			else if (forwardDirection == leftDirection)
 			{
@@ -280,6 +376,11 @@ public class Player extends Entity
 				{
 					//Draw Gun to the Left
 					entityGraphics.drawImage(Entity.GUN_ENTITY_LEFT, ((this.getEntityX() - 2) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
+				}
+				else if (hasBow)
+				{
+					//Draw Bow to the Right
+					entityGraphics.drawImage(Entity.BOW_ENTITY_LEFT, ((this.getEntityX() - 3) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
 				}
 			}
 		}

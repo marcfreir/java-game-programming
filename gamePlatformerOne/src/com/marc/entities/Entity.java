@@ -18,6 +18,8 @@ public class Entity
 	public static int ammoPosition = 6;
 	public static int arrowPosition = 7;
 	public static int bowPosition = 8;
+	public static int bowToTheRightPosition = 2;
+	public static int bowToTheLeftPosition = 3;
 	public static int spriteSheetWidth = 16;
 	public static int spriteSheetHeight = 16;
 	public static int firstLineAxisY = 0;
@@ -32,6 +34,8 @@ public class Entity
 	public static BufferedImage AMMO_ENTITY = Game.spritesheet.getSprite((ammoPosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage ARROW_ENTITY = Game.spritesheet.getSprite((arrowPosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage BOW_ENTITY = Game.spritesheet.getSprite((bowPosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage BOW_ENTITY_RIGHT = Game.spritesheet.getSprite((bowToTheRightPosition * spriteSheetWidth), thirdLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage BOW_ENTITY_LEFT = Game.spritesheet.getSprite((bowToTheLeftPosition * spriteSheetWidth), thirdLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	
 	protected double entityX;
 	protected double entityY;

@@ -6,14 +6,14 @@ import java.awt.image.BufferedImage;
 
 import com.marc.world.Camera;
 
-public class BulletShoot extends Entity
+public class ArrowShoot extends Entity
 {
 	
 	private int shootDirectionX;
 	private int shootDirectionY;
 	private double shootSpeed = 4;
 
-	public BulletShoot(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite, int shootDirectionX, int shootDirectionY)
+	public ArrowShoot(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite, int shootDirectionX, int shootDirectionY)
 	{
 		super(entityX, entityY, entityWidth, entityHeight, sprite);
 		this.shootDirectionX = shootDirectionX;
@@ -29,8 +29,8 @@ public class BulletShoot extends Entity
 	
 	public void renderEntity(Graphics entityGraphics)
 	{
-		entityGraphics.setColor(Color.yellow);
-		entityGraphics.fillOval((this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), entityWidth, entityHeight);
+		entityGraphics.setColor(Color.black);
+		entityGraphics.fillRect((this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), entityWidth, entityHeight);
 	}
 	
 }

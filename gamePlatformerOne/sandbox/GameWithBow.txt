@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import com.marc.entities.Enemy;
 import com.marc.entities.Entity;
 import com.marc.entities.Player;
+import com.marc.entities.ArrowShoot;
 import com.marc.entities.BulletShoot;
 import com.marc.graphics.LifeUI;
 import com.marc.graphics.Spritesheet;
@@ -52,6 +53,8 @@ public class Game extends Canvas implements Runnable, KeyListener
     
     public static List<BulletShoot> bullets;
     
+    public static List<ArrowShoot> arrows;
+    
     public static Spritesheet spritesheet;
     
     public static World world;
@@ -74,6 +77,7 @@ public class Game extends Canvas implements Runnable, KeyListener
     	entities = new ArrayList<Entity>();
     	enemies = new ArrayList<Enemy>();
     	bullets = new ArrayList<BulletShoot>();
+    	arrows = new ArrayList<ArrowShoot>();
     	spritesheet = new Spritesheet("/spriteSheet.png");
     	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
     	player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
@@ -136,6 +140,11 @@ public class Game extends Canvas implements Runnable, KeyListener
         {
         	bullets.get(index).updateEntity();
         }
+        
+        for (int index = 0; index < arrows.size(); index++)
+        {
+        	arrows.get(index).updateEntity();
+        }
     }
 
 
@@ -167,6 +176,11 @@ public class Game extends Canvas implements Runnable, KeyListener
         	bullets.get(index).renderEntity(gameGraphics);
         }
         
+        for (int index = 0; index < arrows.size(); index++)
+        {
+        	arrows.get(index).renderEntity(gameGraphics);
+        }
+        
         lifeUI.renderLifeUI(gameGraphics);
 
         /***/
@@ -176,6 +190,7 @@ public class Game extends Canvas implements Runnable, KeyListener
         gameGraphics.setFont(new Font("Arial", Font.BOLD, 17));
         gameGraphics.setColor(Color.white);
         gameGraphics.drawString("Ammo:   " + player.ammo, ((WIDTH * SCALE) - 100), ((HEIGHT * SCALE) - ((HEIGHT * SCALE) - 20)));
+        gameGraphics.drawString("Arrows: " + player.arrows, ((WIDTH * SCALE) - 100), ((HEIGHT * SCALE) - ((HEIGHT * SCALE) - 40)));
         bs.show();
     }
 
@@ -254,6 +269,12 @@ public class Game extends Canvas implements Runnable, KeyListener
 		if (event.getKeyCode() == KeyEvent.VK_X)
 		{
 			player.shoot = true;
+		}
+		
+		//Shoot Arrow
+		if (event.getKeyCode() == KeyEvent.VK_X)
+		{
+			player.shootArrow = true;
 		}
 		
 	}
