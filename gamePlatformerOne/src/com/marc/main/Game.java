@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 //import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -23,12 +25,13 @@ import com.marc.entities.Player;
 import com.marc.entities.BulletShoot;
 import com.marc.graphics.LifeUI;
 import com.marc.graphics.Spritesheet;
+import com.marc.world.Camera;
 import com.marc.world.World;
 
 /**
  * Graphics
  */
-public class Game extends Canvas implements Runnable, KeyListener
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 {
 
 
@@ -66,6 +69,7 @@ public class Game extends Canvas implements Runnable, KeyListener
     public Game() {
     	random = new Random();
     	addKeyListener(this);
+    	addMouseListener(this);
     	setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
     	initFrame();
     	//Starting objects
@@ -175,7 +179,7 @@ public class Game extends Canvas implements Runnable, KeyListener
         gameGraphics.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
         gameGraphics.setFont(new Font("Arial", Font.BOLD, 17));
         gameGraphics.setColor(Color.white);
-        gameGraphics.drawString("Ammo:   " + player.ammo, ((WIDTH * SCALE) - 100), ((HEIGHT * SCALE) - ((HEIGHT * SCALE) - 20)));
+        gameGraphics.drawString("Ammo:   " + player.ammo, ((WIDTH * SCALE) - 120), ((HEIGHT * SCALE) - ((HEIGHT * SCALE) - 30)));
         bs.show();
     }
 
@@ -253,7 +257,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 		//Shoot
 		if (event.getKeyCode() == KeyEvent.VK_X)
 		{
-			player.shoot = true;
+			player.shootWithKeyboard = true;
 		}
 		
 	}
@@ -286,6 +290,43 @@ public class Game extends Canvas implements Runnable, KeyListener
 			player.playerDown = false;
 			System.out.println("Down Direction Key - Stoped");
 		}
+		
+	}
+	
+	//Mouser Controller (MouseListner)
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent event) {
+		player.shootWithMouse = true;
+		player.mousePositionX = (event.getX() / SCALE);
+		player.mousePositionY = (event.getY() / SCALE);
+		
+		//System.out.println(player.mousePositionX); <-//Just for debugging
+		//System.out.println(player.mousePositionY); <-//Just for debugging
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -43,11 +43,15 @@ public class Player extends Entity
 	public int ammo = 0;
 	
 	//Shoot
-	public boolean shoot = false;
+	public boolean shootWithKeyboard = false;
+	public boolean shootWithMouse = false;
 	
 	
 	public double playerLife = 100;
 	public double playerMaxLife = 100;
+	
+	public int mousePositionX;
+	public int mousePositionY;
 
 	public Player(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite)
 	{
@@ -130,18 +134,19 @@ public class Player extends Entity
 		checkIsDamaged();
 		playerLifeIsOverRestartGame();
 		checkCollisionGun();
-		playerShoot();
+		playerShootWithKeyboard();
+		playerShootWithMouse();
 		
 		Camera.cameraX = Camera.clamp((this.getEntityX() - (Game.WIDTH / 2)), 0, (World.WORLD_WIDTH * 16 - Game.WIDTH));
 		Camera.cameraY = Camera.clamp((this.getEntityY() - (Game.HEIGHT / 2)), 0, (World.WORLD_HEIGHT * 16 - Game.HEIGHT));
 	}
 	
-	public void playerShoot()
+	public void playerShootWithKeyboard()
 	{
-		if (shoot)
+		if (shootWithKeyboard)
 		{
 			//Create bullet and shoot
-			shoot = false;
+			shootWithKeyboard = false;
 			
 			if (hasGun && (ammo > 0))
 			{
@@ -168,6 +173,54 @@ public class Player extends Entity
 			}
 		}
 	}
+	
+	
+	public void playerShootWithMouse()
+	{
+		if (shootWithMouse)
+		{
+			//System.out.println("Shoot!"); <-//Just for debugging
+			//Create bullet and shoot
+			shootWithMouse = false;
+			
+			//Calculate the angle of the mouse - to see the Angle add Math.toDegrees(mouseAngle "content")
+			//double mouseAngle = Math.atan2(mousePositionY - ((this.getEntityY() + 8) - Camera.cameraY), mousePositionX - ((this.getEntityX() + 8) - Camera.cameraX));
+			//System.out.println(mouseAngle); <-//Just for debugging
+			
+			if (hasGun && (ammo > 0))
+			{
+			ammo--;
+			
+			//System.out.println("Shooting"); <-//Just for debugging
+			
+			int shootPointX = 0;
+			int shootPointY = 8;
+			
+			double mouseAngle = 0;
+			
+			if (forwardDirection == rightDirection)
+			{
+				shootPointX = 12;
+				//shootDirectionX = 1;
+				mouseAngle = Math.atan2(mousePositionY - ((this.getEntityY() + shootPointY) - Camera.cameraY), mousePositionX - ((this.getEntityX() + shootPointX) - Camera.cameraX));
+			}
+			else
+			{
+				shootPointX = 0;
+				//shootDirectionX = -1;
+				mouseAngle = Math.atan2(mousePositionY - ((this.getEntityY() + shootPointY) - Camera.cameraY), mousePositionX - ((this.getEntityX() + shootPointX) - Camera.cameraX));
+			}
+			
+			double shootDirectionX = Math.cos(mouseAngle);
+			double shootDirectionY = Math.sin(mouseAngle);
+			
+			
+			BulletShoot bullet = new BulletShoot((this.getEntityX() + shootPointX), (this.getEntityY() + shootPointY), 3, 3, null, shootDirectionX, shootDirectionY);
+			Game.bullets.add(bullet);
+			}
+		}
+	}
+	
 	
 	public void playerLifeIsOverRestartGame()
 	{
@@ -225,7 +278,7 @@ public class Player extends Entity
 			{
 				if (Entity.isCollidingEntity(this, currentAmmo))
 				{
-					ammo +=10;
+					ammo +=100;
 					//System.out.println("Current Ammo: " + ammo); <-//Just for debugging
 					Game.entities.remove(currentAmmo);
 				}

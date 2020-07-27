@@ -10,14 +10,14 @@ import com.marc.world.Camera;
 public class BulletShoot extends Entity
 {
 	
-	private int shootDirectionX;
-	private int shootDirectionY;
+	private double shootDirectionX;
+	private double shootDirectionY;
 	private double shootSpeed = 4;
 	
-	private int bulletLength = 30;
-	private int currentBulletLength = 0;
+	private int shootLength = 20;
+	private int currentShootLength = 0;
 
-	public BulletShoot(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite, int shootDirectionX, int shootDirectionY)
+	public BulletShoot(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage sprite, double shootDirectionX, double shootDirectionY)
 	{
 		super(entityX, entityY, entityWidth, entityHeight, sprite);
 		this.shootDirectionX = shootDirectionX;
@@ -30,9 +30,9 @@ public class BulletShoot extends Entity
 		entityX += shootDirectionX * shootSpeed;
 		entityY += shootDirectionY * shootSpeed;
 		
-		currentBulletLength++;
+		currentShootLength++;
 		
-		if (currentBulletLength == bulletLength)
+		if (currentShootLength == shootLength)
 		{
 			Game.bullets.remove(this);
 			return;
