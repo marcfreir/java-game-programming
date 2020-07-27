@@ -25,7 +25,7 @@ import com.marc.entities.Player;
 import com.marc.entities.BulletShoot;
 import com.marc.graphics.LifeUI;
 import com.marc.graphics.Spritesheet;
-import com.marc.world.Camera;
+//import com.marc.world.Camera;
 import com.marc.world.World;
 
 /**
