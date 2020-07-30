@@ -333,6 +333,18 @@ public class Player extends Entity
 		else
 		{
 			entityGraphics.drawImage(playerDamage, (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+			
+			if (hasGun)
+			{
+				if (forwardDirection == leftDirection)
+				{
+					entityGraphics.drawImage(Entity.GUN_LEFT_DAMAGED_ENTITY, ((this.getEntityX() - 2) - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+				}
+				else
+				{
+					entityGraphics.drawImage(Entity.GUN_RIGHT_DAMAGED_ENTITY, ((this.getEntityX() + 2) - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+				}
+			}
 		}
 	}
 	

@@ -69,7 +69,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     
     public LifeUI lifeUI;
     
-    public static String gameState = "GAME_OVER";
+    public static String gameState = "NORMAL";
+    
+    private boolean showMessageGameOver = true;
+    private int gameOverFrames = 0;
+    
+    private boolean restartGame = false;
     
     // Constructor
     public Game() {
@@ -136,6 +141,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     	//Check game State
     	if (gameState == "NORMAL")
     	{
+    		this.restartGame = false;
+    		
 	        for (int index = 0; index < entities.size(); index++)
 	        {
 	        	//Entity entity = entities.get(index);
@@ -155,6 +162,31 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     	else if (gameState == "GAME_OVER")
     	{
     		//System.out.println("Game Over!"); <-//Just for debugging
+    		this.gameOverFrames++;
+    		
+    		if (this.gameOverFrames == 20)
+    		{
+    			this.gameOverFrames = 0;
+    			
+    			if (this.showMessageGameOver)
+    			{
+    				this.showMessageGameOver = false;
+    			}
+    			else
+    			{
+    				this.showMessageGameOver = true;
+    			}
+    		}
+    		
+    		if (restartGame)
+    		{
+    			this.restartGame = false;
+    			this.gameState = "NORMAL";
+    			CURRENT_LEVEL = 1;
+        		String newWorld = ("Level" + CURRENT_LEVEL + ".png");
+        		System.out.println(newWorld);
+        		World.restartGame(newWorld);
+    		}
     	}
     }
     
@@ -229,7 +261,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             //Press Enter Message
             gameGraphics.setFont(new Font("Arial", Font.BOLD, 24));
             gameGraphics.setColor(Color.white);
-            gameGraphics.drawString("[Press ENTER to ReStart the Game]", (((WIDTH * SCALE)) / 2) - 200, ((HEIGHT * SCALE) / 2) + 50);
+            
+            if (showMessageGameOver)
+            {
+            	gameGraphics.drawString("[Press ENTER to ReStart the Game]", (((WIDTH * SCALE)) / 2) - 200, ((HEIGHT * SCALE) / 2) + 50);
+            }
     	}
 
         bs.show();
@@ -310,6 +346,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		if (event.getKeyCode() == KeyEvent.VK_X)
 		{
 			player.shootWithKeyboard = true;
+		}
+		
+		//Restart Game
+		if (event.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			this.restartGame = true;
 		}
 		
 	}

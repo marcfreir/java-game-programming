@@ -203,7 +203,7 @@ public class Enemy extends Entity
 		}
 		else
 		{
-			entityGraphics.drawImage(Entity.ENEMY_DAMAGED_FEEDBACK, (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+			entityGraphics.drawImage(Entity.ENEMY_DAMAGED_FEEDBACK_ENTITY, (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
 		}
 		
 		//super.renderEntity(entityGraphics);

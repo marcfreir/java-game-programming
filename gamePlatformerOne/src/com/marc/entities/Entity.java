@@ -14,6 +14,8 @@ public class Entity
 	public static int gunPosition = 7;
 	public static int gunToTheRightPosition = 0;
 	public static int gunToTheLeftPosition = 1;
+	public static int gunToTheRightDamagedPosition = 3;
+	public static int gunToTheLeftDamagedPosition = 4;
 	public static int enemyPosition = 8;
 	public static int enemyDamagedPosition = 1;
 	public static int ammoPosition = 6;
@@ -28,8 +30,10 @@ public class Entity
 	public static BufferedImage GUN_ENTITY = Game.spritesheet.getSprite((gunPosition * spriteSheetWidth), firstLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage GUN_RIGHT_ENTITY = Game.spritesheet.getSprite((gunToTheRightPosition * spriteSheetWidth), thirdLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage GUN_LEFT_ENTITY = Game.spritesheet.getSprite((gunToTheLeftPosition * spriteSheetWidth), thirdLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage GUN_RIGHT_DAMAGED_ENTITY = Game.spritesheet.getSprite((gunToTheRightDamagedPosition * spriteSheetWidth), fourthLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage GUN_LEFT_DAMAGED_ENTITY = Game.spritesheet.getSprite((gunToTheLeftDamagedPosition * spriteSheetWidth), fourthLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage ENEMY_ENTITY = Game.spritesheet.getSprite((enemyPosition * spriteSheetWidth), firstLineAxisY, spriteSheetWidth, spriteSheetHeight);
-	public static BufferedImage ENEMY_DAMAGED_FEEDBACK = Game.spritesheet.getSprite((enemyDamagedPosition * spriteSheetWidth), fourthLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage ENEMY_DAMAGED_FEEDBACK_ENTITY = Game.spritesheet.getSprite((enemyDamagedPosition * spriteSheetWidth), fourthLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage AMMO_ENTITY = Game.spritesheet.getSprite((ammoPosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	
 	protected double entityX;
