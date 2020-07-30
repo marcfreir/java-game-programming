@@ -15,18 +15,21 @@ public class Entity
 	public static int gunToTheRightPosition = 0;
 	public static int gunToTheLeftPosition = 1;
 	public static int enemyPosition = 8;
+	public static int enemyDamagedPosition = 1;
 	public static int ammoPosition = 6;
 	public static int spriteSheetWidth = 16;
 	public static int spriteSheetHeight = 16;
 	public static int firstLineAxisY = 0;
 	public static int secondLineAxisY = 16;
 	public static int thirdLineAxisY = 32;
+	public static int fourthLineAxisY = 48;
 	
 	public static BufferedImage LIFEPACK_ENTITY = Game.spritesheet.getSprite((lifePackPosition * spriteSheetWidth), firstLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage GUN_ENTITY = Game.spritesheet.getSprite((gunPosition * spriteSheetWidth), firstLineAxisY, spriteSheetWidth, spriteSheetHeight);
-	public static BufferedImage GUN_ENTITY_RIGHT = Game.spritesheet.getSprite((gunToTheRightPosition * spriteSheetWidth), thirdLineAxisY, spriteSheetWidth, spriteSheetHeight);
-	public static BufferedImage GUN_ENTITY_LEFT = Game.spritesheet.getSprite((gunToTheLeftPosition * spriteSheetWidth), thirdLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage GUN_RIGHT_ENTITY = Game.spritesheet.getSprite((gunToTheRightPosition * spriteSheetWidth), thirdLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage GUN_LEFT_ENTITY = Game.spritesheet.getSprite((gunToTheLeftPosition * spriteSheetWidth), thirdLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage ENEMY_ENTITY = Game.spritesheet.getSprite((enemyPosition * spriteSheetWidth), firstLineAxisY, spriteSheetWidth, spriteSheetHeight);
+	public static BufferedImage ENEMY_DAMAGED_FEEDBACK = Game.spritesheet.getSprite((enemyDamagedPosition * spriteSheetWidth), fourthLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	public static BufferedImage AMMO_ENTITY = Game.spritesheet.getSprite((ammoPosition * spriteSheetWidth), secondLineAxisY, spriteSheetWidth, spriteSheetHeight);
 	
 	protected double entityX;

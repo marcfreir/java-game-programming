@@ -322,7 +322,7 @@ public class Player extends Entity
 				if (hasGun)
 				{
 					//Draw Gun to the Right
-					entityGraphics.drawImage(Entity.GUN_ENTITY_RIGHT, ((this.getEntityX() + 2) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
+					entityGraphics.drawImage(Entity.GUN_RIGHT_ENTITY, ((this.getEntityX() + 2) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
 				}
 			}
 			else if (forwardDirection == leftDirection)
@@ -332,7 +332,7 @@ public class Player extends Entity
 				if (hasGun)
 				{
 					//Draw Gun to the Left
-					entityGraphics.drawImage(Entity.GUN_ENTITY_LEFT, ((this.getEntityX() - 2) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
+					entityGraphics.drawImage(Entity.GUN_LEFT_ENTITY, ((this.getEntityX() - 2) - Camera.cameraX), ((this.getEntityY() + 2) - Camera.cameraY), null);
 				}
 			}
 		}

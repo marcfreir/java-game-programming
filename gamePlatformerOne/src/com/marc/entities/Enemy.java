@@ -26,6 +26,10 @@ public class Enemy extends Entity
 	private BufferedImage[] enemiesSprites;
 	
 	private int enemyLife = 10;
+	
+	private boolean enemyIsDamaged = false;
+	private int currentDamage = 0;
+	private int enemyDamageFrames = 10;
 
 	public Enemy(int entityX, int entityY, int entityWidth, int entityHeight, BufferedImage[] sprite)
 	{
@@ -107,6 +111,8 @@ public class Enemy extends Entity
 		
 		checkEnemyLife();
 		
+		checkIfEnemyIsDamaged();
+		
 	}
 	
 	public void checkEnemyLife()
@@ -115,6 +121,20 @@ public class Enemy extends Entity
 		{
 			destroySelf();
 			return;
+		}
+	}
+	
+	public void checkIfEnemyIsDamaged()
+	{
+		if (enemyIsDamaged)
+		{
+			this.currentDamage++;
+			
+			if (this.currentDamage == this.enemyDamageFrames)
+			{
+				this.currentDamage = 0;
+				this.enemyIsDamaged = false;
+			}
 		}
 	}
 	
@@ -133,6 +153,7 @@ public class Enemy extends Entity
 			{
 				if (Entity.isCollidingEntity(this, enemy))
 				{
+					enemyIsDamaged = true;
 					enemyLife--;
 					Game.bullets.remove(index);
 					return;
@@ -175,7 +196,15 @@ public class Enemy extends Entity
 	@Override
 	public void renderEntity(Graphics entityGraphics)
 	{
-		entityGraphics.drawImage(enemiesSprites[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+		if (!enemyIsDamaged)
+		{
+			entityGraphics.drawImage(enemiesSprites[indexFrames], (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+		}
+		else
+		{
+			entityGraphics.drawImage(Entity.ENEMY_DAMAGED_FEEDBACK, (this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), null);
+		}
+		
 		//super.renderEntity(entityGraphics);
 		
 		//Set Mask
