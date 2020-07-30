@@ -46,6 +46,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public static final int WIDTH = 240;
     public static final int HEIGHT = 160;
     private final int SCALE = 3;
+    
+    private int CURRENT_LEVEL = 1;
+    private int MAX_LEVEL = 2;
 
     private BufferedImage image;
     
@@ -82,7 +85,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
     	player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
     	entities.add(player);
-    	world = new World("/map.png");
+    	world = new World("/level1.png");
     }
 
     public void initFrame()
@@ -140,6 +143,27 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         {
         	bullets.get(index).updateEntity();
         }
+        
+        checkIfEnemiesHaveBeenDestroyed();
+    }
+    
+    public void checkIfEnemiesHaveBeenDestroyed()
+    {
+    	if (enemies.size() == 0)
+    	{
+    		//System.out.println("Next Level!"); <-//Just for debugging
+    		//Move on to the next level
+    		CURRENT_LEVEL++;
+    		
+    		if (CURRENT_LEVEL > MAX_LEVEL)
+    		{
+    			CURRENT_LEVEL = 1;
+    		}
+    		
+    		String newWorld = ("Level" + CURRENT_LEVEL + ".png");
+    		System.out.println(newWorld);
+    		World.restartGame(newWorld);
+    	}
     }
 
 

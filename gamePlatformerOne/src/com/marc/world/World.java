@@ -3,10 +3,17 @@ package com.marc.world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import com.marc.entities.*;
+import com.marc.entities.Ammo;
+import com.marc.entities.Enemy;
+import com.marc.entities.Entity;
+import com.marc.entities.Gun;
+import com.marc.entities.LifePack;
+import com.marc.entities.Player;
+import com.marc.graphics.Spritesheet;
 import com.marc.main.Game;
 
 public class World
@@ -115,6 +122,20 @@ public class World
 				 (tiles[x2 + (y2 * World.WORLD_WIDTH)] instanceof WallTile) || 
 				 (tiles[x3 + (y3 * World.WORLD_WIDTH)] instanceof WallTile) || 
 				 (tiles[x4 + (y4 * World.WORLD_WIDTH)] instanceof WallTile));
+	}
+	
+	public static void restartGame(String gameLevel)
+	{
+		Game.entities.clear();
+		Game.enemies.clear();
+    	Game.entities = new ArrayList<Entity>();
+    	Game.enemies = new ArrayList<Enemy>();
+    	Game.spritesheet = new Spritesheet("/spriteSheet.png");
+    	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
+    	Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
+    	Game.entities.add(Game.player);
+    	Game.world = new World("/" + gameLevel);
+    	return;
 	}
 	
 	public void renderWorld(Graphics worldGraphics)

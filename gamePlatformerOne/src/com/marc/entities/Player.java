@@ -226,14 +226,9 @@ public class Player extends Entity
 	{
 		if (playerLife <= 0)
 		{
-	    	Game.entities = new ArrayList<Entity>();
-	    	Game.enemies = new ArrayList<Enemy>();
-	    	Game.spritesheet = new Spritesheet("/spriteSheet.png");
-	    	//Based on the spriteSheetNewPosition.png File - set the coordinates in getSprite
-	    	Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
-	    	Game.entities.add(Game.player);
-	    	Game.world = new World("/map.png");
-	    	return;
+			/*
+			Game Over!
+	    	*/
 		}
 	}
 	
