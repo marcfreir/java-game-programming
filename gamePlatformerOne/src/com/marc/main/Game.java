@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 //import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -67,6 +68,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public static Random random;
     
     public LifeUI lifeUI;
+    
+    public static String gameState = "GAME_OVER";
     
     // Constructor
     public Game() {
@@ -130,21 +133,29 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public void updateGame()
     {
-        for (int index = 0; index < entities.size(); index++)
-        {
-        	//Entity entity = entities.get(index);
-        	//entity.updateEntity();
-        	//Changed to player - return to the original code above in case of errors
-        	Entity player = entities.get(index);
-        	player.updateEntity();
-        }
-        
-        for (int index = 0; index < bullets.size(); index++)
-        {
-        	bullets.get(index).updateEntity();
-        }
-        
-        checkIfEnemiesHaveBeenDestroyed();
+    	//Check game State
+    	if (gameState == "NORMAL")
+    	{
+	        for (int index = 0; index < entities.size(); index++)
+	        {
+	        	//Entity entity = entities.get(index);
+	        	//entity.updateEntity();
+	        	//Changed to player - return to the original code above in case of errors
+	        	Entity player = entities.get(index);
+	        	player.updateEntity();
+	        }
+	        
+	        for (int index = 0; index < bullets.size(); index++)
+	        {
+	        	bullets.get(index).updateEntity();
+	        }
+	        
+	        checkIfEnemiesHaveBeenDestroyed();
+    	}
+    	else if (gameState == "GAME_OVER")
+    	{
+    		//System.out.println("Game Over!"); <-//Just for debugging
+    	}
     }
     
     public void checkIfEnemiesHaveBeenDestroyed()
@@ -165,8 +176,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     		World.restartGame(newWorld);
     	}
     }
-
-
+    
     public void renderGame()
     {
         //To organize complex memory on the Canvas
@@ -204,6 +214,24 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         gameGraphics.setFont(new Font("Arial", Font.BOLD, 17));
         gameGraphics.setColor(Color.white);
         gameGraphics.drawString("Ammo:   " + player.ammo, ((WIDTH * SCALE) - 120), ((HEIGHT * SCALE) - ((HEIGHT * SCALE) - 30)));
+
+    	if (gameState == "GAME_OVER")
+    	{
+    		Graphics2D gameOverScreenGraphics = (Graphics2D) gameGraphics;
+    		gameOverScreenGraphics.setColor(new Color( 0, 0, 0, 100));
+    		gameOverScreenGraphics.fillRect(0, 0, (WIDTH * SCALE), (HEIGHT * SCALE));
+    		
+    		//Game Over Message
+            gameGraphics.setFont(new Font("Arial", Font.BOLD, 30));
+            gameGraphics.setColor(Color.white);
+            gameGraphics.drawString("GAME OVER!", (((WIDTH * SCALE)) / 2) - 100, ((HEIGHT * SCALE) / 2));
+            
+            //Press Enter Message
+            gameGraphics.setFont(new Font("Arial", Font.BOLD, 24));
+            gameGraphics.setColor(Color.white);
+            gameGraphics.drawString("[Press ENTER to ReStart the Game]", (((WIDTH * SCALE)) / 2) - 200, ((HEIGHT * SCALE) / 2) + 50);
+    	}
+
         bs.show();
     }
 
