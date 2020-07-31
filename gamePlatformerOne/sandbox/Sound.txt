@@ -1,0 +1,61 @@
+package com.marc.sounds;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
+
+@SuppressWarnings("deprecation")
+public class Sound
+{
+	private AudioClip clip;
+	
+	public static final Sound musicBackground = new Sound("/music.wav");
+	public static final Sound hurtEffect = new Sound("/damage.wav");
+	
+	private Sound(String soundName)
+	{
+		try
+		{
+			clip = Applet.newAudioClip(Sound.class.getResource(soundName));
+		}
+		catch (Throwable exception)
+		{
+			
+		}
+	}
+	
+	public void play()
+	{
+		try
+		{
+			new Thread()
+			{
+				public void run()
+				{
+					clip.play();
+				}
+			}.start();
+		}
+		catch (Throwable exception)
+		{
+			
+		}
+	}
+	
+	public void loop()
+	{
+		try
+		{
+			new Thread()
+			{
+				public void run()
+				{
+					clip.loop();
+				}
+			}.start();
+		}
+		catch (Throwable exception)
+		{
+			
+		}
+	}
+}

@@ -6,16 +6,19 @@ import java.applet.AudioClip;
 @SuppressWarnings("deprecation")
 public class Sound
 {
-	private AudioClip audioClip;
+	private AudioClip clip;
 	
-	public static final Sound musicBackground = new Sound("/levelOne.wav");
-	public static final Sound hurtEffect = new Sound("/damage.wav");
+	public static final Sound musicbg = new Sound("/theme.wav");
+	public static final Sound hurtEffect = new Sound("/damage.au");
+	public static final Sound shootEffect = new Sound("/playerGun.au");
+	public static final Sound getItemEffect = new Sound("/getItem.au");
+	public static final Sound enemyDeathScreamEffect = new Sound("/enemydeathscream.wav");
 	
 	private Sound(String soundName)
 	{
 		try
 		{
-			audioClip = Applet.newAudioClip(Sound.class.getResource(soundName));
+			clip = Applet.newAudioClip(Sound.class.getResource(soundName));
 		}
 		catch (Throwable exception)
 		{
@@ -29,9 +32,10 @@ public class Sound
 		{
 			new Thread()
 			{
+				@Override
 				public void run()
 				{
-					audioClip.play();
+					clip.play();
 				}
 			}.start();
 		}
@@ -47,9 +51,10 @@ public class Sound
 		{
 			new Thread()
 			{
+				@Override
 				public void run()
 				{
-					audioClip.loop();
+					clip.loop();
 				}
 			}.start();
 		}

@@ -81,7 +81,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     
     // Constructor
     public Game() {
-    	Sound.musicBackground.loop();
+    	Sound.musicbg.loop();
+    	//Sound.musicBackground.loop();
     	random = new Random();
     	addKeyListener(this);
     	addMouseListener(this);
@@ -120,6 +121,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         thread = new Thread(this);
         isRunning = true;
         thread.start();
+        //Sound.musicbg.loop();
     }
 
     public synchronized void stopGame()
@@ -223,6 +225,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     
     public void renderGame()
     {
+    	//Sound.musicbg.loop();
         //To organize complex memory on the Canvas
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null)

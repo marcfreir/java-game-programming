@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.marc.main.Game;
+import com.marc.sounds.Sound;
 import com.marc.world.Camera;
 
 public class BulletShoot extends Entity
@@ -43,6 +44,7 @@ public class BulletShoot extends Entity
 	{
 		entityGraphics.setColor(Color.yellow);
 		entityGraphics.fillOval((this.getEntityX() - Camera.cameraX), (this.getEntityY() - Camera.cameraY), entityWidth, entityHeight);
+		Sound.shootEffect.play();
 	}
 	
 }

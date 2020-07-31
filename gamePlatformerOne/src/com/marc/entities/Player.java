@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.marc.graphics.Spritesheet;
 import com.marc.main.Game;
+import com.marc.sounds.Sound;
 import com.marc.world.Camera;
 import com.marc.world.World;
 
@@ -261,6 +262,7 @@ public class Player extends Entity
 					hasGun = true;
 					//System.out.println("Current Gun: " + hasGun); <-//Just for debugging
 					Game.entities.remove(currentGun);
+					Sound.getItemEffect.play();
 				}
 			}
 		}
@@ -279,6 +281,7 @@ public class Player extends Entity
 					ammo +=100;
 					//System.out.println("Current Ammo: " + ammo); <-//Just for debugging
 					Game.entities.remove(currentAmmo);
+					Sound.getItemEffect.play();
 				}
 			}
 		}
@@ -301,6 +304,7 @@ public class Player extends Entity
 						playerLife = 100;
 					}
 					Game.entities.remove(currentLifePack);
+					Sound.getItemEffect.play();
 					//Game.entities.remove(index);
 					//return;
 				}

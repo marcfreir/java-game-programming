@@ -144,6 +144,7 @@ public class Enemy extends Entity
 	{
 		Game.enemies.remove(this);
 		Game.entities.remove(this);
+		Sound.enemyDeathScreamEffect.play();
 	}
 	
 	public void collidingBullet()
