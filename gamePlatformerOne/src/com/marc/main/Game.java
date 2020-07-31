@@ -26,6 +26,7 @@ import com.marc.entities.Player;
 import com.marc.entities.BulletShoot;
 import com.marc.graphics.LifeUI;
 import com.marc.graphics.Spritesheet;
+import com.marc.sounds.Sound;
 //import com.marc.world.Camera;
 import com.marc.world.World;
 
@@ -80,6 +81,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     
     // Constructor
     public Game() {
+    	Sound.musicBackground.loop();
     	random = new Random();
     	addKeyListener(this);
     	addMouseListener(this);

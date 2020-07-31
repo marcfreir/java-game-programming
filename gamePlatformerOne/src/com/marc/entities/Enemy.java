@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.marc.main.Game;
+import com.marc.sounds.Sound;
 import com.marc.world.Camera;
 import com.marc.world.World;
 
@@ -85,6 +86,7 @@ public class Enemy extends Entity
 		{
 			if (Game.random.nextInt(100) < 10)
 			{
+				Sound.hurtEffect.play();
 				//We're colliding - The player is losing life
 				Game.player.playerLife -= Game.random.nextInt(3);
 				Game.player.isDamaged = true;
