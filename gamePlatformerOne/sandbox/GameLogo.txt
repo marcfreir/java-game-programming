@@ -1,0 +1,29 @@
+package com.marc.main;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class GameLogo
+{
+	private BufferedImage gameLogo;
+	
+	//Constructor
+	public GameLogo(String path)
+	{
+		try
+		{
+			gameLogo = ImageIO.read(getClass().getResource(path));
+		}
+		catch (IOException exception)
+		{
+			exception.printStackTrace();
+		}
+	}
+	
+	public BufferedImage getGameLogo(int gameLogoPositionX, int gameLogoPositionY, int gameLogoWidth, int gameLogoHeight)
+	{
+		return gameLogo.getSubimage(gameLogoPositionX, gameLogoPositionY, gameLogoWidth, gameLogoHeight);
+	}
+}
